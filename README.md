@@ -1,4 +1,4 @@
-# Baseline — Tennis Club & Academy
+# Arcadia — Tennis Club & Academy
 
 Landing page for a fictional members' tennis club and academy. The whole site is a single `index.html` file: HTML, CSS and JS with no build step and no framework.
 
