@@ -1,0 +1,1046 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Baseline — Tennis Club & Academy</title>
+<meta name="description" content="Baseline Tennis Club & Academy — focused coaching, championship courts." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="preload" as="image" href="assets/hero/hero-court.webp" fetchpriority="high" />
+<script type="importmap">
+{ "imports": { "lenis": "https://cdn.jsdelivr.net/npm/lenis@1.1.18/+esm" } }
+</script>
+<script>
+  // Adaptive rem grid — scale up above 1920px (media queries handle scale-down)
+  (function () {
+    var FONT_BASE = 16, BASE_W = 1920, COEF = 0.6666, html = document.documentElement;
+    function fit() {
+      var reduction = ((BASE_W - innerWidth) / BASE_W) * 100 * COEF;
+      var size = FONT_BASE - (FONT_BASE * reduction) / 100;
+      if (size > FONT_BASE) html.style.fontSize = size + "px";
+      else html.style.removeProperty("font-size");
+    }
+    fit();
+    addEventListener("resize", fit);
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  })();
+</script>
+<style>
+  :root {
+    --background: #ffffff; --foreground: #0a0a0a;
+    --brand: #2563c9; --brand-deep: #0f2f63; --brand-light: #5790e6;
+    --accent-teal: #0b6e97; --surface: #f4f4f4; --surface-card: #ffffff;
+    --ink: #0a0a0a; --ink-soft: #717784; --ghost: #d7dae1; --hairline: #e6e8ec;
+    --on-brand: #ffffff;
+    --radius-card: 1.5rem; --radius-card-lg: 2rem; --radius-pill: 62.5rem;
+    --expo: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  html { font-size: 16px; }
+  @media (max-width: 1920px) { html { font-size: 0.833333vw; } }
+  @media (max-width: 1440px) { html { font-size: 1.111111vw; } }
+  @media (max-width: 1024px) { html { font-size: 1.5625vw; } }
+  @media (max-width: 640px)  { html { font-size: 4.444444vw; } }
+
+  /* Lenis */
+  html.lenis, html.lenis body { height: auto; }
+  .lenis.lenis-smooth { scroll-behavior: auto !important; }
+  .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+  .lenis.lenis-stopped { overflow: hidden; }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  * { margin: 0; padding: 0; }
+  img { display: block; max-width: 100%; }
+  button { cursor: pointer; font: inherit; color: inherit; background: none; border: 0; }
+  a { color: inherit; text-decoration: none; }
+  ul { list-style: none; }
+  input, textarea { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--brand-light); outline-offset: 2px; }
+  body {
+    min-height: 100vh; background: var(--background); color: var(--foreground);
+    font-family: "Onest", system-ui, sans-serif; -webkit-font-smoothing: antialiased;
+  }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+  main { width: 100%; overflow-x: clip; padding: 0.5rem; }
+  @media (min-width: 640px) { main { padding: 0.75rem; } }
+
+  /* ---------- Shared ---------- */
+  .mark { width: 1.25rem; height: 1.25rem; flex: none; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.22em; color: var(--ink-soft); }
+  .eyebrow::before { content: ""; width: 0.375rem; height: 0.375rem; border-radius: var(--radius-pill); background: var(--brand); }
+  .eyebrow.light { color: rgba(255,255,255,0.7); }
+  .eyebrow.light::before { background: var(--brand-light); }
+
+  .pill { display: inline-flex; align-items: center; gap: 0.5rem; border-radius: var(--radius-pill); padding: 0.875rem 1.75rem; font-size: 0.875rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.025em; border: 1px solid transparent; transition: background-color .25s, color .25s, border-color .25s; white-space: nowrap; }
+  .pill svg { width: 1rem; height: 1rem; }
+  .pill-light { background: #fff; color: var(--brand-deep); }
+  .pill-light:hover { background: var(--brand-light); color: #fff; }
+  .pill-solid { background: var(--ink); color: #fff; }
+  .pill-solid:hover { background: var(--brand-deep); }
+  .pill-outline { border-color: currentColor; color: var(--ink); }
+  .pill-outline:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+  .arrow-btn { width: 3rem; height: 3rem; display: grid; place-items: center; border-radius: var(--radius-pill); border: 1px solid; transition: background-color .25s, border-color .25s; }
+  @media (min-width: 640px) { .arrow-btn { width: 3.5rem; height: 3.5rem; } }
+  .arrow-btn .ico { display: grid; place-items: center; }
+  .arrow-btn svg { width: 1.25rem; height: 1.25rem; }
+  .arrow-btn.prev svg { transform: scaleX(-1); }
+  .arrow-btn.outline { border-color: var(--hairline); color: var(--ink); }
+  .arrow-btn.outline:hover { border-color: var(--ink); }
+  .arrow-btn.solid { background: var(--ink); border-color: var(--ink); color: #fff; }
+  .arrow-btn.solid:hover { background: var(--brand-deep); border-color: var(--brand-deep); }
+
+  .dots { display: flex; gap: 0.5rem; align-items: center; }
+  .dot { padding: 0.375rem; line-height: 0; }
+  .dot i { display: block; height: 0.375rem; width: 0.375rem; border-radius: var(--radius-pill); background: var(--ghost); transition: width .4s var(--expo), background-color .3s; }
+  .dot[aria-current="true"] i { width: 1.25rem; background: var(--ink); }
+  .dots.light .dot i { background: rgba(255,255,255,0.4); }
+  .dots.light .dot[aria-current="true"] i { background: #fff; }
+
+  /* Reveal primitives */
+  .stack .line { display: block; overflow: hidden; padding-bottom: 0.14em; margin-bottom: -0.14em; }
+  .stack .line > span { display: block; transform: translateY(115%); opacity: 0; will-change: transform; }
+  .w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: 0.04em; }
+  .w > span { display: inline-block; transform: translateY(115%); opacity: 0; will-change: transform; }
+  .fw { display: inline-block; opacity: 0; transform: translateY(18px); }
+
+  .h-section { font-size: 3rem; font-weight: 500; line-height: 0.95; letter-spacing: -0.025em; margin-top: 1rem; }
+
+  .glass { border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.1); padding: 0.75rem; border-radius: var(--radius-card); box-shadow: 0 1.25rem 2.5rem rgba(15,47,99,0.2); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
+
+  /* ---------- Header ---------- */
+  .site-header { position: relative; z-index: 5; display: flex; align-items: center; padding: 1.5rem 1.5rem 0; font-size: 0.75rem; color: #fff; }
+  @media (min-width: 640px) { .site-header { padding: 2rem 2.5rem 0; } }
+  .hdr-left { display: none; flex: 1; gap: 2rem; }
+  .hdr-left a { opacity: 0.9; transition: opacity .2s; }
+  .hdr-left a:hover { opacity: 1; }
+  .brand { flex: 1; display: flex; align-items: center; gap: 0.5rem; font-size: 1rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.2em; }
+  @media (min-width: 1024px) { .hdr-left { display: flex; } .site-header .brand { justify-content: center; } }
+  .hdr-right { flex: 1; display: flex; justify-content: flex-end; align-items: center; gap: 1rem; }
+  @media (min-width: 640px) { .hdr-right { gap: 1.25rem; } }
+  .hdr-book { display: none; text-transform: uppercase; letter-spacing: 0.025em; font-size: 0.75rem; text-underline-offset: 0.25em; }
+  .hdr-book:hover { text-decoration: underline; }
+  @media (min-width: 640px) { .hdr-book { display: inline-block; } }
+  .round-btn { width: 2.5rem; height: 2.5rem; display: grid; place-items: center; place-content: center; border-radius: var(--radius-pill); background: rgba(255,255,255,0.15); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); transition: background-color .25s; color: #fff; }
+  .round-btn:hover { background: rgba(255,255,255,0.25); }
+  .burger { gap: 5px; }
+  .burger span { display: block; width: 1rem; height: 1px; background: #fff; }
+  .round-btn svg { width: 1.1rem; height: 1.1rem; }
+
+  /* ---------- Hero ---------- */
+  .hero { position: relative; isolation: isolate; overflow: hidden; background: var(--brand-deep); color: #fff; border-radius: var(--radius-card-lg); height: calc(100svh - 1rem); min-height: 36rem; display: flex; flex-direction: column; }
+  @media (min-width: 640px) { .hero { height: calc(100svh - 1.5rem); } }
+  .hero-bg { position: absolute; inset: 0; z-index: -10; }
+  .hero-plate { position: absolute; left: 0; right: 0; top: -16%; height: 132%; width: 100%; will-change: transform; }
+  .hero-plate img { width: 100%; height: 100%; object-fit: cover; }
+  .hero-grad { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(15,47,99,0.65), rgba(15,47,99,0.35), rgba(15,47,99,0.75)); }
+  .hero-title-wrap { padding: 1rem 1.5rem 0; }
+  @media (min-width: 640px) { .hero-title-wrap { padding: 1rem 2.5rem 0; } }
+  .hero-title { font-size: 12.5vw; font-weight: 500; text-transform: uppercase; line-height: 0.85; letter-spacing: -0.02em; white-space: nowrap; }
+  .hero-bottom { margin-top: auto; padding: 0 1.5rem 2rem; display: flex; flex-direction: column; gap: 1.5rem; }
+  @media (min-width: 640px) { .hero-bottom { padding: 0 2.5rem 2.5rem; flex-direction: row; justify-content: space-between; align-items: flex-end; } }
+  .hero-tagline { font-size: 2.4rem; font-weight: 500; text-transform: uppercase; line-height: 0.95; letter-spacing: -0.025em; color: rgba(255,255,255,0.85); }
+  .hero-cluster { display: flex; align-items: flex-end; gap: 1rem; }
+  .collection { display: none; width: 16rem; flex-direction: column; gap: 0.75rem; }
+  @media (min-width: 768px) { .collection { display: flex; } }
+  .cs-stage { display: grid; }
+  .cs-card { grid-area: 1 / 1; display: flex; gap: 0.75rem; }
+  .cs-card img { width: 3.5rem; height: 3.5rem; border-radius: 0.75rem; object-fit: cover; flex: none; }
+  .cs-text { display: flex; flex-direction: column; justify-content: space-between; min-width: 0; }
+  .cs-brand { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.025em; }
+  .cs-title { font-size: 0.7rem; text-transform: uppercase; opacity: 0.8; }
+  .cs-cta { font-size: 0.65rem; text-decoration: underline; text-underline-offset: 0.2em; }
+  .member-card { width: 100%; max-width: 20rem; display: flex; gap: 0.75rem; align-items: stretch; }
+  @media (min-width: 640px) { .member-card { max-width: 15rem; } }
+  .member-left { flex: 1; display: flex; flex-direction: column; justify-content: space-between; gap: 0.5rem; }
+  .member-val { font-size: 1.875rem; font-weight: 500; line-height: 1; }
+  .avatars { display: flex; }
+  .avatars span { width: 1.25rem; height: 1.25rem; border-radius: var(--radius-pill); border: 1px solid rgba(15,47,99,0.4); }
+  .avatars span + span { margin-left: -0.5rem; }
+  .member-cap { font-size: 0.65rem; opacity: 0.8; }
+  .member-card img { width: 4rem; aspect-ratio: 3 / 4; border-radius: 0.75rem; object-fit: cover; flex: none; }
+
+  /* ---------- Trust ---------- */
+  .trust { position: relative; isolation: isolate; overflow: hidden; background: var(--background); padding: 4rem 1.5rem; }
+  @media (min-width: 640px) { .trust { padding: 5rem 2.5rem; } }
+  .trust-top { position: relative; z-index: 20; display: flex; flex-direction: column; gap: 1.5rem; }
+  @media (min-width: 640px) { .trust-top { flex-direction: row; justify-content: space-between; align-items: flex-start; } }
+  .pct-badge { width: 7rem; height: 7rem; border-radius: var(--radius-pill); background: var(--surface); display: grid; place-items: center; text-align: center; flex: none; }
+  @media (min-width: 640px) { .pct-badge { width: 8rem; height: 8rem; } }
+  .pct { display: block; font-size: 1.5rem; font-weight: 500; }
+  .pct-cap { display: block; font-size: 0.6rem; color: var(--ink-soft); max-width: 7em; margin: 0.25rem auto 0; line-height: 1.3; }
+  .badge-card { max-width: 28rem; display: flex; gap: 1rem; align-items: flex-start; border-radius: var(--radius-card); background: var(--surface); padding: 1.25rem; }
+  @media (min-width: 640px) { .badge-card { gap: 1.25rem; padding: 1.5rem; } }
+  .chip { border-radius: 0.75rem; background: var(--background); padding: 0.5rem 1rem; font-size: 1.25rem; font-weight: 500; flex: none; }
+  .badge-card h3 { font-size: 1.125rem; font-weight: 500; }
+  .badge-card p { font-size: 0.75rem; color: var(--ink-soft); line-height: 1.625; margin-top: 0.375rem; }
+  .ghost-heading { position: relative; z-index: 0; pointer-events: none; user-select: none; max-width: 88rem; margin: 3rem auto 0; font-size: 8.2vw; font-weight: 500; text-transform: uppercase; line-height: 1.02; letter-spacing: -0.025em; color: var(--ghost); }
+  .ghost-row { display: flex; justify-content: space-between; }
+  @media (max-width: 639px) {
+    .ghost-heading { font-size: 13vw; }
+    .ghost-row { flex-direction: column; align-items: flex-start; }
+    .ghost-row .ghost-word:nth-child(2) { align-self: flex-end; }
+  }
+  .ghost-word { display: inline-block; will-change: transform; }
+  .ghost-word .clip { display: block; overflow: hidden; padding-bottom: 0.12em; margin-bottom: -0.12em; }
+  .ghost-word .inner { display: block; transform: translateY(115%); opacity: 0; }
+  .ghost-word.ink { color: var(--ink); }
+  .coach-pos { position: relative; z-index: 10; width: 13rem; margin: 2.5rem auto 0; }
+  @media (min-width: 640px) { .coach-pos { position: absolute; left: 50%; top: 50%; width: 16rem; margin: 0; transform: translate(-50%, -50%); } }
+  .coach-card { position: relative; transform: rotate(6deg); aspect-ratio: 3 / 4; border-radius: var(--radius-card); background: var(--brand); overflow: hidden; }
+  .coach-imgs, .coach-imgs img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .coach-cap { position: absolute; left: 0.75rem; right: 0.75rem; bottom: 0.75rem; border-radius: 0.75rem; background: rgba(15,47,99,0.4); color: #fff; -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); padding: 0.5rem 0.75rem; }
+  .coach-name { font-size: 0.875rem; font-weight: 500; }
+  .coach-role { font-size: 0.65rem; opacity: 0.8; }
+  .trust-controls { position: relative; z-index: 20; margin-top: 3rem; display: flex; justify-content: space-between; align-items: center; }
+  @media (min-width: 640px) { .trust-controls { margin-top: 6rem; } }
+
+  /* ---------- Programs ---------- */
+  .programs { background: var(--surface); padding: 6rem 1.5rem; }
+  @media (min-width: 640px) { .programs { padding: 6rem 2.5rem; } }
+  .prog-list { margin-top: 3.5rem; }
+  .prog-list a { display: block; border-top: 1px solid var(--hairline); transition: background-color .2s; }
+  .prog-list li:last-child a { border-bottom: 1px solid var(--hairline); }
+  .prog-list a:focus-visible { background: var(--background); }
+  .prog-row { display: flex; align-items: center; gap: 1.5rem; padding: 1.75rem 0; }
+  .prog-idx { width: 2.5rem; flex: none; font-size: 0.875rem; font-weight: 500; color: var(--ink-soft); }
+  .prog-body { flex: 1; min-width: 0; }
+  .prog-name { font-size: 1.5rem; font-weight: 500; letter-spacing: -0.025em; }
+  @media (min-width: 640px) { .prog-name { font-size: 1.875rem; } }
+  .prog-desc { font-size: 0.875rem; color: var(--ink-soft); margin-top: 0.25rem; }
+  .prog-arrow { width: 2.75rem; height: 2.75rem; flex: none; display: grid; place-items: center; border-radius: var(--radius-pill); border: 1px solid var(--hairline); }
+  .prog-arrow svg { width: 1.25rem; height: 1.25rem; }
+
+  /* ---------- Facilities ---------- */
+  .facilities { position: relative; z-index: 1; background: var(--background); border-radius: var(--radius-card-lg); margin-top: -2.5rem; padding: 4rem 1.5rem 5rem; }
+  @media (min-width: 640px) { .facilities { padding: 4rem 2.5rem 5rem; } }
+  .fac-grid { display: grid; grid-template-columns: 1fr; align-items: end; gap: 2.5rem; }
+  @media (min-width: 768px) { .fac-grid { grid-template-columns: 1fr 1fr; } }
+  .fac-intro { max-width: 24rem; }
+  .fac-icon { width: 4rem; height: 4rem; border-radius: var(--radius-card); object-fit: cover; }
+  .fac-intro .h-section { margin-top: 1.5rem; }
+  .fac-body { font-size: 0.875rem; color: var(--ink-soft); max-width: 20rem; margin-top: 1.5rem; line-height: 1.5; }
+  .courts { display: flex; align-items: flex-end; gap: 1.25rem; }
+  .court { flex: 1; min-width: 0; }
+  .court:nth-child(2) { margin-bottom: 2rem; }
+  @media (max-width: 639px) {
+    .courts { flex-direction: column; align-items: stretch; }
+    .court { width: 100%; }
+    .court:nth-child(2) { margin-bottom: 0; }
+  }
+  .court-tile { position: relative; aspect-ratio: 3 / 4; border-radius: var(--radius-card); overflow: hidden; background: var(--surface); }
+  .court-tile img { width: 100%; height: 100%; object-fit: cover; will-change: transform; }
+  .court-cap { position: absolute; left: 0.75rem; right: 0.75rem; bottom: 0.75rem; border-radius: 0.75rem; -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); color: #fff; padding: 0.75rem 1rem; }
+  .court-cap.blue { background: rgba(11,110,151,0.55); }
+  .court-cap.clay { background: rgba(15,47,99,0.4); }
+  .court-name { font-size: 0.875rem; font-weight: 500; }
+  .court-desc { font-size: 0.65rem; opacity: 0.85; margin-top: 0.125rem; line-height: 1.4; }
+
+  /* ---------- Stats ---------- */
+  .stats { background: var(--brand-deep); color: #fff; border-radius: var(--radius-card-lg); margin-top: 0.75rem; padding: 5rem 1.5rem; }
+  @media (min-width: 640px) { .stats { padding: 5rem 2.5rem; } }
+  .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); column-gap: 2rem; row-gap: 3rem; margin-top: 4rem; }
+  @media (min-width: 1024px) { .stats-grid { grid-template-columns: repeat(4, 1fr); } }
+  .stat { border-top: 1px solid rgba(255,255,255,0.2); padding-top: 1.25rem; }
+  .stat-val { font-size: 3.75rem; font-weight: 500; letter-spacing: -0.025em; line-height: 1; }
+  @media (min-width: 640px) { .stat-val { font-size: 4.5rem; } }
+  .stat-label { font-size: 0.875rem; color: rgba(255,255,255,0.65); margin-top: 0.75rem; }
+
+  /* ---------- Testimonials ---------- */
+  .testimonials { background: var(--background); padding: 5rem 1.5rem; }
+  @media (min-width: 640px) { .testimonials { padding: 6rem 2.5rem; } }
+  .t-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; margin-top: 3.5rem; }
+  @media (min-width: 768px) { .t-grid { grid-template-columns: repeat(3, 1fr); } }
+  .t-grid li { display: flex; }
+  .t-card { display: flex; flex-direction: column; justify-content: space-between; height: 100%; width: 100%; border-radius: var(--radius-card); background: var(--surface); padding: 1.75rem; }
+  .t-quote { font-size: 2.25rem; color: var(--brand); line-height: 1; }
+  .t-card blockquote { font-size: 1.125rem; line-height: 1.625; color: var(--ink); margin-top: 1rem; }
+  .t-card figcaption { border-top: 1px solid var(--hairline); padding-top: 1rem; margin-top: 1.5rem; }
+  .t-name { font-weight: 500; }
+  .t-role { font-size: 0.875rem; color: var(--ink-soft); }
+
+  /* ---------- Footer ---------- */
+  .footer { background: var(--brand-deep); color: #fff; border-radius: var(--radius-card-lg); margin-top: 0.75rem; padding: 3.5rem 1.5rem; }
+  @media (min-width: 640px) { .footer { padding: 4rem 2.5rem; } }
+  .f-cta { border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 3.5rem; display: flex; flex-direction: column; align-items: flex-start; gap: 2rem; }
+  @media (min-width: 640px) { .f-cta { flex-direction: row; justify-content: space-between; align-items: flex-end; } }
+  .f-cta-title { font-size: 3.75rem; font-weight: 500; line-height: 0.92; letter-spacing: -0.025em; margin-top: 1rem; }
+  .f-cols { padding: 3.5rem 0; display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem 1.5rem; }
+  .f-brand-col { grid-column: 1 / -1; }
+  @media (min-width: 768px) { .f-brand-col { grid-column: auto; } }
+  @media (min-width: 768px) { .f-cols { grid-template-columns: 1.4fr 1fr 1fr 1fr; } }
+  .f-brand-col { max-width: 20rem; }
+  .f-brand { display: flex; align-items: center; gap: 0.5rem; font-size: 1.125rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.2em; }
+  .f-blurb { font-size: 0.875rem; color: rgba(255,255,255,0.65); margin-top: 1rem; line-height: 1.5; }
+  .f-address { font-style: normal; margin-top: 1.5rem; color: rgba(255,255,255,0.8); font-size: 0.875rem; display: flex; flex-direction: column; gap: 0.375rem; }
+  .f-address a:hover { color: #fff; }
+  .f-address .muted { color: rgba(255,255,255,0.55); }
+  .f-nav h3 { font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.2em; color: rgba(255,255,255,0.5); }
+  .f-nav ul { font-size: 0.875rem; color: rgba(255,255,255,0.8); margin-top: 1rem; display: flex; flex-direction: column; gap: 0.75rem; }
+  .f-nav a { transition: color .2s; }
+  .f-nav a:hover { color: #fff; }
+  .f-bottom { border-top: 1px solid rgba(255,255,255,0.15); padding-top: 2rem; font-size: 0.875rem; color: rgba(255,255,255,0.6); display: flex; flex-direction: column; gap: 1.25rem; }
+  @media (min-width: 640px) { .f-bottom { flex-direction: row; justify-content: space-between; align-items: center; } }
+  .f-bottom nav { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+  .f-bottom a:hover { color: #fff; }
+
+  /* ---------- Menu overlay ---------- */
+  .menu { position: fixed; inset: 0; z-index: 70; display: flex; flex-direction: column; pointer-events: none; color: #fff; }
+  .menu.open { pointer-events: auto; }
+  .menu-backdrop { position: absolute; inset: 0; background: var(--brand-deep); opacity: 0; }
+  .menu-panel { position: relative; flex: 1; display: flex; flex-direction: column; padding: 0.5rem; opacity: 0; }
+  @media (min-width: 640px) { .menu-panel { padding: 0.75rem; } }
+  .menu-inner { flex: 1; display: flex; flex-direction: column; padding: 1.5rem; }
+  @media (min-width: 640px) { .menu-inner { padding: 2rem 2.5rem; } }
+  .menu-top { display: flex; justify-content: space-between; align-items: center; }
+  .menu-top .brand { flex: none; }
+  .menu-nav { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 0.5rem; }
+  .menu-link { display: block; width: max-content; font-size: 3rem; font-weight: 500; letter-spacing: -0.025em; line-height: 1.05; transition: color .2s; }
+  @media (min-width: 640px) { .menu-link { font-size: 4.5rem; } }
+  .menu-link:hover { color: var(--brand-light); }
+  .menu-bottom { border-top: 1px solid rgba(255,255,255,0.15); padding-top: 2rem; display: flex; flex-direction: column; gap: 1.5rem; }
+  @media (min-width: 640px) { .menu-bottom { flex-direction: row; justify-content: space-between; align-items: center; } }
+  .menu-social { display: flex; gap: 1.25rem; font-size: 0.875rem; color: rgba(255,255,255,0.7); }
+  .menu-social a:hover { color: #fff; }
+
+  /* ---------- Modal ---------- */
+  .modal { position: fixed; inset: 0; z-index: 90; display: flex; align-items: flex-end; justify-content: center; padding: 0.75rem; pointer-events: none; }
+  @media (min-width: 640px) { .modal { align-items: center; padding: 1.5rem; } }
+  .modal.open { pointer-events: auto; }
+  .modal-backdrop { position: absolute; inset: 0; background: rgba(15,47,99,0.4); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); opacity: 0; }
+  .modal-panel { position: relative; width: 100%; max-height: 92svh; overflow-y: auto; border-radius: var(--radius-card-lg); background: var(--surface-card); padding: 1.5rem; color: var(--ink); box-shadow: 0 2rem 5rem rgba(15,47,99,0.35); opacity: 0; }
+  @media (min-width: 640px) { .modal-panel { padding: 2rem; max-width: 32rem; } }
+  .modal-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+  .modal-title { font-size: 2.25rem; font-weight: 500; line-height: 0.95; letter-spacing: -0.025em; margin-top: 0.75rem; }
+  @media (min-width: 640px) { .modal-title { font-size: 3rem; } }
+  .close-dark { width: 2.5rem; height: 2.5rem; flex: none; display: grid; place-items: center; border-radius: var(--radius-pill); background: var(--surface); transition: background-color .2s; }
+  .close-dark:hover { background: var(--hairline); }
+  .close-dark svg, .close-light svg { width: 1.1rem; height: 1.1rem; }
+  .v-form { margin-top: 1.75rem; display: flex; flex-direction: column; gap: 1rem; }
+  .field { display: flex; flex-direction: column; gap: 0.5rem; }
+  .field span { font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.18em; color: var(--ink-soft); }
+  .field input, .field textarea { width: 100%; border-radius: 0.75rem; border: 1px solid var(--hairline); background: var(--background); padding: 0.75rem 1rem; font-size: 0.875rem; outline: none; resize: vertical; transition: border-color .2s, box-shadow .2s; }
+  .field input:focus, .field textarea:focus { border-color: var(--brand-light); box-shadow: 0 0 0 2px rgba(87,144,230,0.35); }
+  .submit { align-self: flex-start; margin-top: 0.5rem; border-radius: var(--radius-pill); background: var(--ink); color: #fff; padding: 0.875rem 1.75rem; font-size: 0.875rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.025em; transition: background-color .25s, opacity .25s; }
+  .submit:hover { background: var(--brand-deep); }
+  .submit:disabled { opacity: 0.6; cursor: default; }
+  .success { margin-top: 2rem; border-radius: var(--radius-card); background: var(--surface); padding: 1.5rem; text-align: center; }
+  .success-ico { width: 3rem; height: 3rem; margin: 0 auto; display: grid; place-items: center; border-radius: var(--radius-pill); background: var(--brand); color: #fff; }
+  .success-ico svg { width: 1.5rem; height: 1.5rem; }
+  .success h3 { font-size: 1.125rem; font-weight: 500; margin-top: 1rem; }
+  .success p { font-size: 0.875rem; color: var(--ink-soft); margin-top: 0.5rem; line-height: 1.5; }
+  .success .submit { align-self: auto; margin-top: 1.25rem; }
+
+  /* ---------- Loader ---------- */
+  .loader { position: fixed; inset: 0; z-index: 200; background: var(--brand-deep); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
+  .loader-mark { display: flex; align-items: center; gap: 0.5rem; font-size: 1.5rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.2em; opacity: 0; }
+  .loader-mark .mark { width: 1.75rem; height: 1.75rem; }
+  .loader-track { width: 10rem; height: 1px; border-radius: var(--radius-pill); background: rgba(255,255,255,0.2); overflow: hidden; }
+  .loader-fill { height: 100%; background: #fff; transform: scaleX(0); transform-origin: left; }
+</style>
+</head>
+<body>
+
+<!-- ========== LOADER ========== -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader-mark" id="loader-mark"><svg class="mark" data-mark></svg><span>Baseline</span></div>
+  <div class="loader-track"><div class="loader-fill" id="loader-fill"></div></div>
+</div>
+
+<main>
+  <!-- ========== HERO ========== -->
+  <section class="hero" id="hero" aria-labelledby="hero-title">
+    <div class="hero-bg" aria-hidden="false">
+      <div class="hero-plate" id="hero-plate">
+        <img src="assets/hero/hero-court.webp" alt="Player lunging for a shot on a hard court" loading="eager" fetchpriority="high" decoding="async" />
+      </div>
+      <div class="hero-grad"></div>
+    </div>
+
+    <header class="site-header">
+      <nav class="hdr-left" aria-label="Primary">
+        <a href="#programs">Programs &amp; Coaches</a>
+        <a href="#facilities">Club &amp; Events</a>
+      </nav>
+      <a class="brand" href="#" aria-label="Baseline home"><svg class="mark" data-mark></svg><span>Baseline</span></a>
+      <div class="hdr-right">
+        <button class="hdr-book" type="button" data-open-modal>Book a Visit</button>
+        <button class="round-btn burger" type="button" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
+      </div>
+    </header>
+
+    <div class="hero-title-wrap">
+      <h1 id="hero-title" class="hero-title">Own The Court</h1>
+    </div>
+
+    <div class="hero-bottom">
+      <p class="hero-tagline stack" id="hero-tagline" data-lines="Show Up,|Level Up"></p>
+      <div class="hero-cluster">
+        <div class="collection" id="collection">
+          <div class="cs-stage" id="cs-stage"></div>
+          <div class="dots light" id="cs-dots"></div>
+        </div>
+        <article class="member-card glass" id="member-card">
+          <div class="member-left">
+            <div class="member-val">9K+</div>
+            <div class="avatars" aria-hidden="true">
+              <span style="background:#5790e6"></span><span style="background:#c2e029"></span><span style="background:#0b6e97"></span><span style="background:#ffffff"></span>
+            </div>
+            <div class="member-cap">Members on court</div>
+          </div>
+          <img src="assets/1.webp" alt="Player waiting to return on a clay court" loading="lazy" decoding="async" />
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TRUST ========== -->
+  <section class="trust" id="trust" aria-labelledby="trust-title">
+    <div class="trust-top">
+      <div class="pct-badge" id="pct-badge"><div><span class="pct">100%</span><span class="pct-cap">Coaching built around your game</span></div></div>
+      <article class="badge-card" id="badge-card">
+        <span class="chip">#01</span>
+        <div>
+          <h3>Trusted by serious players</h3>
+          <p>From first-timers to nationally ranked juniors, players train here because the progress shows up on the scoreboard.</p>
+        </div>
+      </article>
+    </div>
+
+    <h2 class="ghost-heading" id="trust-title">
+      <span class="ghost-row">
+        <span class="ghost-word"><span class="clip"><span class="inner"></span></span></span>
+        <span class="ghost-word"><span class="clip"><span class="inner"></span></span></span>
+      </span>
+      <span class="ghost-row">
+        <span class="ghost-word ink"><span class="clip"><span class="inner"></span></span></span>
+        <span class="ghost-word"><span class="clip"><span class="inner"></span></span></span>
+      </span>
+    </h2>
+
+    <div class="coach-pos">
+      <div id="coach-in">
+        <figure class="coach-card">
+          <div class="coach-imgs" id="coach-imgs"></div>
+          <figcaption class="coach-cap"><div class="coach-name" id="coach-name"></div><div class="coach-role" id="coach-role"></div></figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="trust-controls">
+      <button class="arrow-btn outline prev" type="button" id="trust-prev" aria-label="Previous coach"><span class="ico"><svg data-arrow></svg></span></button>
+      <div class="dots" id="trust-dots"></div>
+      <button class="arrow-btn solid" type="button" id="trust-next" aria-label="Next coach"><span class="ico"><svg data-arrow></svg></span></button>
+    </div>
+  </section>
+
+  <!-- ========== PROGRAMS ========== -->
+  <section class="programs" id="programs" aria-labelledby="programs-title">
+    <span class="eyebrow">Training programs</span>
+    <h2 class="h-section stack" id="programs-title" data-lines="Built for|every level"></h2>
+    <ul class="prog-list" id="prog-list"></ul>
+  </section>
+
+  <!-- ========== FACILITIES ========== -->
+  <section class="facilities" id="facilities" aria-labelledby="facilities-title">
+    <div class="fac-grid">
+      <div class="fac-intro">
+        <img class="fac-icon" id="fac-icon" src="assets/3.webp" alt="Player stretching for a forehand on clay" loading="lazy" decoding="async" />
+        <h2 class="h-section stack" id="facilities-title" data-lines="Tour Our|World-Class|Courts"></h2>
+        <p class="fac-body" id="fac-body">Reserve a court for focused practice, squad drills, or private sessions — and train in the same conditions you'll compete in.</p>
+      </div>
+      <div class="courts" id="courts"></div>
+    </div>
+  </section>
+
+  <!-- ========== STATS ========== -->
+  <section class="stats" aria-labelledby="stats-title">
+    <span class="eyebrow light">By the numbers</span>
+    <h2 class="h-section stack" id="stats-title" data-lines="A club that|keeps score"></h2>
+    <dl class="stats-grid" id="stats-grid"></dl>
+  </section>
+
+  <!-- ========== TESTIMONIALS ========== -->
+  <section class="testimonials" id="testimonials" aria-labelledby="testimonials-title">
+    <span class="eyebrow">What players say</span>
+    <h2 class="h-section stack" id="testimonials-title" data-lines="Loved by|the locker room"></h2>
+    <ul class="t-grid" id="t-grid"></ul>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer" id="contact">
+    <div class="f-cta">
+      <div>
+        <span class="eyebrow light">Get started</span>
+        <p class="f-cta-title stack" data-lines="Ready to|play?"></p>
+      </div>
+      <button class="pill pill-light" type="button" id="footer-cta" data-open-modal data-arrow-hover>Book a Visit <svg data-arrow></svg></button>
+    </div>
+    <div class="f-cols">
+      <div class="f-brand-col">
+        <div class="f-brand"><svg class="mark" data-mark></svg><span>Baseline</span></div>
+        <p class="f-blurb">A members' tennis club and academy where focused coaching meets championship courts.</p>
+        <address class="f-address">
+          <a href="mailto:play@baseline.club">play@baseline.club</a>
+          <a href="tel:+12125550148">+1 (212) 555-0148</a>
+          <span class="muted">120 Court Lane, New York</span>
+        </address>
+      </div>
+      <nav class="f-nav" aria-label="Programs"><h3>Programs</h3><ul>
+        <li><a href="#junior">Junior Development</a></li><li><a href="#performance">Performance Squad</a></li><li><a href="#adult">Adult Clinics</a></li><li><a href="#private">Private Coaching</a></li>
+      </ul></nav>
+      <nav class="f-nav" aria-label="Club"><h3>Club</h3><ul>
+        <li><a href="#membership">Membership</a></li><li><a href="#facilities">Facilities</a></li><li><a href="#club">Events</a></li><li><a href="#shop">Pro Shop</a></li>
+      </ul></nav>
+      <nav class="f-nav" aria-label="Company"><h3>Company</h3><ul>
+        <li><a href="#about">About</a></li><li><a href="#programs">Coaches</a></li><li><a href="#careers">Careers</a></li><li><a href="#contact">Contact</a></li>
+      </ul></nav>
+    </div>
+    <div class="f-bottom">
+      <p>© 2026 Baseline Tennis Club. All rights reserved.</p>
+      <nav aria-label="Social"><a href="#instagram">Instagram</a><a href="#x">X</a><a href="#youtube">YouTube</a><a href="#linkedin">LinkedIn</a></nav>
+      <nav aria-label="Legal"><a href="#privacy">Privacy</a><a href="#terms">Terms</a></nav>
+    </div>
+  </footer>
+</main>
+
+<!-- ========== MENU OVERLAY ========== -->
+<div class="menu" id="menu" aria-hidden="true" inert>
+  <div class="menu-backdrop" id="menu-backdrop"></div>
+  <div class="menu-panel" id="menu-panel">
+    <div class="menu-inner">
+      <div class="menu-top">
+        <a class="brand" href="#" aria-label="Baseline home"><svg class="mark" data-mark></svg><span>Baseline</span></a>
+        <button class="round-btn close-light" type="button" id="menu-close" aria-label="Close menu"><svg data-x></svg></button>
+      </div>
+      <nav class="menu-nav" aria-label="Menu">
+        <a class="menu-link" href="#programs">Programs</a>
+        <a class="menu-link" href="#facilities">Facilities</a>
+        <a class="menu-link" href="#testimonials">Reviews</a>
+        <a class="menu-link" href="#contact">Contact</a>
+      </nav>
+      <div class="menu-bottom">
+        <button class="pill pill-light" type="button" id="menu-book" data-arrow-hover>Book a Visit <svg data-arrow></svg></button>
+        <nav class="menu-social" aria-label="Social"><a href="#instagram">Instagram</a><a href="#x">X</a><a href="#youtube">YouTube</a><a href="#linkedin">LinkedIn</a></nav>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== CONTACT MODAL ========== -->
+<div class="modal" id="modal" aria-hidden="true" inert>
+  <div class="modal-backdrop" id="modal-backdrop"></div>
+  <div class="modal-panel" id="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modal-title" data-lenis-prevent>
+    <div class="modal-head">
+      <div>
+        <span class="eyebrow">Book a visit</span>
+        <h2 class="modal-title stack" id="modal-title" data-lines="Come see|the courts"></h2>
+      </div>
+      <button class="close-dark" type="button" id="modal-close" aria-label="Close"><svg data-x></svg></button>
+    </div>
+    <form class="v-form" id="visit-form" novalidate>
+      <label class="field"><span>Full name</span><input type="text" name="name" id="f-name" placeholder="Alex Rivera" autocomplete="name" /></label>
+      <label class="field"><span>Email</span><input type="email" name="email" placeholder="you@email.com" autocomplete="email" /></label>
+      <label class="field"><span>What would you like to play?</span><textarea name="message" rows="3" placeholder="I'd love to try a private lesson on the clay courts…"></textarea></label>
+      <button class="submit" type="submit" id="f-submit">Request a visit</button>
+    </form>
+    <div class="success" id="success" hidden>
+      <div class="success-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></div>
+      <h3>Request received</h3>
+      <p id="success-text"></p>
+      <button class="submit" type="button" id="success-done">Done</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+/* ================= Constants & data ================= */
+const A = "assets/";
+const EASE = {
+  outExpo: "cubic-bezier(0.16, 1, 0.3, 1)",
+  outQuart: "cubic-bezier(0.25, 1, 0.5, 1)",
+  inOutCubic: "cubic-bezier(0.65, 0, 0.35, 1)",
+};
+const ICON = {
+  mark: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M4.8 5.6A9 9 0 0 0 4.8 18.4"/><path d="M19.2 5.6a9 9 0 0 1 0 12.8"/></svg>',
+  arrow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+  x: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+};
+const COLLECTIONS = [
+  { img: "2.webp", brand: "Baseline Pro", title: "Featured Gear", cta: "Shop the kit", alt: "Player driving a backhand on a hard court" },
+  { img: "3.webp", brand: "Court Series", title: "Summer Drop", cta: "View the line", alt: "Player stretching for a forehand on clay" },
+  { img: "5.webp", brand: "Academy Kit", title: "Junior Range", cta: "Browse juniors", alt: "Player set in a ready stance on clay" },
+];
+const TRUST = [
+  { headline: ["Expert", "Result-", "Driven", "Coaching"], img: "5.webp", name: "Marco Vidal", role: "Head Coach", alt: "Head coach set in a ready stance on clay" },
+  { headline: ["Sharper", "Faster", "Stronger", "Player"], img: "4.webp", name: "Elena Sokolova", role: "Performance Coach", alt: "Performance coach following through on a serve" },
+  { headline: ["Future", "Champions", "Start", "Here"], img: "1.webp", name: "James Okoro", role: "Juniors Lead", alt: "Juniors lead waiting to return on clay" },
+];
+const PROGRAMS = [
+  { i: "01", name: "Junior Development", desc: "Fundamentals, footwork, and match play for ages 6–14.", href: "#junior" },
+  { i: "02", name: "Performance Squad", desc: "High-volume training for competitive and ranked players.", href: "#performance" },
+  { i: "03", name: "Adult Clinics", desc: "Small-group sessions to sharpen technique and fitness.", href: "#adult" },
+  { i: "04", name: "Private Coaching", desc: "One-to-one sessions tailored to your goals and schedule.", href: "#private" },
+];
+const COURTS = [
+  { img: "1.webp", tone: "clay", name: "Redline Clay", desc: "A fast outdoor clay court tuned for long, physical rallies.", alt: "Player on the baseline of an outdoor clay court" },
+  { img: "4.webp", tone: "blue", name: "Harbor Court", desc: "A sheltered hard court built for precision and night play.", alt: "Player following through on a blue hard court" },
+];
+const STATS = [
+  { v: "24", l: "Certified coaches" }, { v: "12", l: "Championship courts" },
+  { v: "9K+", l: "Members training" }, { v: "15", l: "Years on the baseline" },
+];
+const TESTIMONIALS = [
+  { q: "I added a level to my serve in one season. The coaching is detailed and it actually sticks.", n: "Priya Anand", r: "Performance Squad" },
+  { q: "Best courts in the city and a team that treats every member like a competitor.", n: "Lukas Brenner", r: "Adult Clinics" },
+  { q: "My daughter went from shy beginner to club champion. Worth every minute.", n: "Dana Okafor", r: "Parent, Junior Development" },
+];
+
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const isMobile = () => matchMedia("(max-width: 768px)").matches;
+
+// Inject icons
+$$("svg[data-mark]").forEach(s => s.outerHTML = ICON.mark.replace("<svg", `<svg class="${s.getAttribute("class") || "mark"}"`));
+$$("svg[data-arrow]").forEach(s => s.outerHTML = ICON.arrow);
+$$("svg[data-x]").forEach(s => s.outerHTML = ICON.x);
+
+/* ================= Spring engine (react-spring tension/friction model) ================= */
+const activeSprings = new Set();
+class Spring {
+  constructor(initial, apply, config = { tension: 170, friction: 26 }) {
+    this.v = { ...initial }; this.t = { ...initial }; this.vel = {};
+    for (const k in initial) this.vel[k] = 0;
+    this.apply = apply; this.config = config;
+    apply(this.v);
+  }
+  to(target, config) {
+    if (config) this.config = config;
+    for (const k in target) { this.t[k] = target[k]; if (!(k in this.v)) { this.v[k] = target[k]; this.vel[k] = 0; } }
+    activeSprings.add(this);
+    return this;
+  }
+  set(vals) {
+    for (const k in vals) { this.v[k] = this.t[k] = vals[k]; this.vel[k] = 0; }
+    this.apply(this.v);
+  }
+  step(dt) {
+    const { tension, friction } = this.config;
+    const n = Math.max(1, Math.ceil(dt / 0.004)), h = dt / n;
+    let moving = false;
+    for (const k in this.t) {
+      let x = this.v[k], vv = this.vel[k];
+      const tg = this.t[k];
+      for (let i = 0; i < n; i++) { const a = -tension * (x - tg) - friction * vv; vv += a * h; x += vv * h; }
+      if (Math.abs(x - tg) < 0.001 && Math.abs(vv) < 0.001) { x = tg; vv = 0; } else moving = true;
+      this.v[k] = x; this.vel[k] = vv;
+    }
+    this.apply(this.v);
+    if (!moving) activeSprings.delete(this);
+  }
+}
+const tf = el => v => {
+  el.style.transform = `translate3d(${v.x || 0}px, ${v.y || 0}px, 0) scale(${v.scale ?? 1}) rotate(${v.rotate || 0}deg)`;
+  if ("opacity" in v) el.style.opacity = v.opacity;
+};
+
+/* ================= Scroll-progress parallax ================= */
+const parallax = [];
+function addParallax(el, section, axis, from, to) { parallax.push({ el, section, axis, from, to }); }
+function updateParallax() {
+  const vh = innerHeight;
+  for (const p of parallax) {
+    const r = p.section.getBoundingClientRect();
+    const t = Math.min(1, Math.max(0, (vh - r.top) / (vh + r.height)));
+    const v = p.from + (p.to - p.from) * t;
+    p.el.style.transform = p.axis === "y" ? `translate3d(0, ${v}%, 0)` : `translate3d(${v}%, 0, 0)`;
+  }
+}
+
+/* ================= Lenis + scroll lock + rAF loop ================= */
+let lenis = null;
+const locks = new Set();
+function applyLock() {
+  const on = locks.size > 0, h = document.documentElement.style;
+  if (on) { lenis?.stop(); h.position = "relative"; h.overflow = "hidden"; h.height = "100%"; }
+  else { h.removeProperty("position"); h.removeProperty("overflow"); h.removeProperty("height"); lenis?.start(); }
+}
+const lock = r => { locks.add(r); applyLock(); };
+const unlock = r => { locks.delete(r); applyLock(); };
+
+let last = performance.now();
+function raf(t) {
+  lenis?.raf(t);
+  const dt = Math.min((t - last) / 1000, 0.064); last = t;
+  for (const s of [...activeSprings]) s.step(dt);
+  updateParallax();
+  requestAnimationFrame(raf);
+}
+requestAnimationFrame(raf);
+
+window.scrollTo(0, 0);
+import("lenis").then(({ default: Lenis }) => {
+  lenis = new Lenis({ smoothWheel: true });
+  applyLock();
+}).catch(err => console.warn("Lenis failed to load, using native scroll", err));
+
+function scrollToTarget(el) {
+  if (lenis) lenis.scrollTo(el);
+  else el.scrollIntoView({ behavior: "smooth" });
+}
+document.addEventListener("click", e => {
+  const a = e.target.closest('a[href^="#"]');
+  if (!a || a.closest("#menu")) return;
+  const id = a.getAttribute("href");
+  if (id === "#") { e.preventDefault(); scrollToTarget(document.body); return; }
+  const el = document.querySelector(id);
+  if (el) { e.preventDefault(); scrollToTarget(el); }
+});
+
+/* ================= Loader ready gate ================= */
+let resolveReady;
+const ready = new Promise(r => resolveReady = r);
+
+/* ================= Reveal primitives ================= */
+function onceInView(el, cb, threshold = 0.15) {
+  const io = new IntersectionObserver(entries => {
+    for (const e of entries) if (e.isIntersecting) { io.disconnect(); cb(); break; }
+  }, { threshold, rootMargin: "0px 0px -5% 0px" });
+  io.observe(el);
+}
+// Inview: spring from -> to once on first viewport entry (optionally gated)
+function inview(el, from, to, { delay = 0, config, gate } = {}) {
+  const s = new Spring(from, tf(el), config);
+  onceInView(el, async () => { if (gate) await gate; setTimeout(() => s.to(to), delay); }, 0.1);
+  return s;
+}
+// Hover spring (disabled ≤768px)
+function hover(trigger, target, from, to, config) {
+  const s = new Spring(from, tf(target), config);
+  trigger.addEventListener("pointerenter", () => { if (!isMobile()) s.to(to); });
+  trigger.addEventListener("pointerleave", () => s.to(from));
+  return s;
+}
+function clipIn(inner, { duration, delay = 0, easing = EASE.outExpo }) {
+  inner.getAnimations().forEach(a => a.cancel());
+  return inner.animate(
+    [{ transform: "translateY(115%)", opacity: 0 }, { transform: "translateY(0)", opacity: 1 }],
+    { duration, delay, easing, fill: "both" }
+  );
+}
+// StackedLines
+function stacked(el, { stagger = 120, baseDelay = 0, duration = 950, gate, auto = true } = {}) {
+  const lines = el.dataset.lines.split("|");
+  el.innerHTML = lines.map(l => `<span class="line"><span>${l}</span></span>`).join("");
+  const inners = $$(".line > span", el);
+  const play = () => inners.forEach((s, i) => clipIn(s, { duration, delay: baseDelay + i * stagger }));
+  const reset = () => inners.forEach(s => { s.getAnimations().forEach(a => a.cancel()); });
+  if (auto) onceInView(el, async () => { if (gate) await gate; play(); });
+  return { play, reset };
+}
+// Word clip-mask reveal
+function splitWords(el) {
+  const words = el.textContent.trim().split(/\s+/);
+  el.innerHTML = words.map(w => `<span class="w"><span>${w}</span></span>`).join(" ");
+  return $$(".w > span", el);
+}
+
+/* ================= Shared component builders ================= */
+function renderDots(container, count, active, onPick) {
+  container.innerHTML = "";
+  for (let i = 0; i < count; i++) {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "dot";
+    b.setAttribute("aria-label", `Go to slide ${i + 1}`);
+    b.innerHTML = "<i></i>";
+    b.addEventListener("click", () => onPick(i));
+    container.appendChild(b);
+  }
+  const update = idx => [...container.children].forEach((b, i) => b.setAttribute("aria-current", i === idx ? "true" : "false"));
+  update(active);
+  return update;
+}
+$$("[data-arrow-hover]").forEach(btn => hover(btn, $("svg", btn), { x: 0 }, { x: 5 }, { tension: 320, friction: 20 }));
+$$(".arrow-btn").forEach(btn => hover(btn, $(".ico", btn), { scale: 1 }, { scale: 1.15 }, { tension: 320, friction: 18 }));
+$$(".close-dark, .close-light").forEach(btn => hover(btn, $("svg", btn), { rotate: 0 }, { rotate: 90 }, { tension: 300, friction: 18 }));
+
+/* ================= HERO ================= */
+addParallax($("#hero-plate"), $("#hero"), "y", 0, 12);
+const titleWords = splitWords($("#hero-title"));
+// Keep the spec'd 12.5vw, but shrink just enough if the Onest glyphs overflow the hero width
+function fitTitle() {
+  const h1 = $("#hero-title"), wrap = h1.parentElement;
+  h1.style.fontSize = "";
+  const cs = getComputedStyle(wrap);
+  const avail = wrap.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+  const w = h1.scrollWidth;
+  if (w > avail) h1.style.fontSize = (parseFloat(getComputedStyle(h1).fontSize) * avail / w) + "px";
+}
+fitTitle();
+addEventListener("resize", fitTitle);
+document.fonts?.ready.then(fitTitle);
+ready.then(() => titleWords.forEach((w, i) => clipIn(w, { duration: 1100, delay: i * 140 })));
+stacked($("#hero-tagline"), { baseDelay: 350, stagger: 110, duration: 900, gate: ready });
+
+// Collection slider
+const csStage = $("#cs-stage");
+let csIdx = 0, csTimer = null;
+function csCard(c) {
+  const el = document.createElement("div");
+  el.className = "cs-card glass";
+  el.innerHTML = `<img src="${A + c.img}" alt="${c.alt}" loading="lazy" decoding="async" />
+    <div class="cs-text"><div><div class="cs-brand">${c.brand}</div><div class="cs-title">${c.title}</div></div>
+    <a class="cs-cta" href="#shop">${c.cta} →</a></div>`;
+  return el;
+}
+let csCurrent = csCard(COLLECTIONS[0]);
+csStage.appendChild(csCurrent);
+const csDots = renderDots($("#cs-dots"), COLLECTIONS.length, 0, i => { goCs(i); restartCs(); });
+function goCs(i) {
+  i = (i + COLLECTIONS.length) % COLLECTIONS.length;
+  if (i === csIdx) return;
+  csIdx = i; csDots(i);
+  const cfg = { tension: 210, friction: 24 };
+  const out = csCurrent;
+  new Spring({ opacity: 1, y: 0, scale: 1 }, tf(out), cfg).to({ opacity: 0, y: 16, scale: 0.96 });
+  out.style.pointerEvents = "none";
+  setTimeout(() => out.remove(), 900);
+  csCurrent = csCard(COLLECTIONS[i]);
+  csStage.appendChild(csCurrent);
+  new Spring({ opacity: 0, y: 16, scale: 0.96 }, tf(csCurrent), cfg).to({ opacity: 1, y: 0, scale: 1 });
+}
+function restartCs() { clearInterval(csTimer); csTimer = setInterval(() => goCs(csIdx + 1), 3800); }
+ready.then(restartCs);
+COLLECTIONS.forEach(c => { const im = new Image(); im.src = A + c.img; });
+
+const heroCfg = { tension: 200, friction: 26 };
+inview($("#collection"), { opacity: 0, y: 28 }, { opacity: 1, y: 0 }, { delay: 650, config: heroCfg, gate: ready });
+inview($("#member-card"), { opacity: 0, y: 28 }, { opacity: 1, y: 0 }, { delay: 780, config: heroCfg, gate: ready });
+
+/* ================= TRUST ================= */
+const trustSec = $("#trust");
+inview($("#pct-badge"), { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1 }, { config: { tension: 220, friction: 22 } });
+inview($("#badge-card"), { opacity: 0, y: 24 }, { opacity: 1, y: 0 }, { delay: 120, config: { tension: 200, friction: 26 } });
+const ghostWords = $$(".ghost-word", trustSec);
+const ghostInners = ghostWords.map(g => $(".inner", g));
+[[-3, 3], [3, -3], [-2, 4], [4, -3]].forEach(([f, t], i) => addParallax(ghostWords[i], trustSec, "x", f, t));
+inview($("#coach-in"), { opacity: 0, y: 60, scale: 0.92 }, { opacity: 1, y: 0, scale: 1 }, { config: { tension: 170, friction: 26 } });
+
+let tIdx = 0, ghostShown = false;
+const coachImgs = $("#coach-imgs");
+function setCoachPhoto(s, fade) {
+  const img = new Image();
+  img.src = A + s.img; img.alt = s.alt; img.decoding = "async";
+  if (!fade) { coachImgs.appendChild(img); return; }
+  img.style.opacity = 0;
+  coachImgs.appendChild(img);
+  const olds = [...coachImgs.children].filter(n => n !== img);
+  const go = () => {
+    new Spring({ opacity: 0 }, v => img.style.opacity = v.opacity, { tension: 260, friction: 26 }).to({ opacity: 1 });
+    setTimeout(() => olds.forEach(o => o.remove()), 900);
+  };
+  img.decode ? img.decode().then(go, go) : go();
+}
+const trustDots = renderDots($("#trust-dots"), TRUST.length, 0, i => setTrust(i));
+function setTrust(i, first = false) {
+  i = (i + TRUST.length) % TRUST.length;
+  if (!first && i === tIdx) return;
+  tIdx = i;
+  const s = TRUST[i];
+  ghostInners.forEach((el, k) => { el.textContent = s.headline[k]; if (!first && ghostShown) clipIn(el, { duration: 700 }); });
+  $("#coach-name").textContent = s.name;
+  $("#coach-role").textContent = s.role;
+  setCoachPhoto(s, !first);
+  trustDots(i);
+}
+setTrust(0, true);
+onceInView($("#trust-title"), () => { ghostShown = true; ghostInners.forEach(el => clipIn(el, { duration: 700 })); });
+$("#trust-prev").addEventListener("click", () => setTrust(tIdx - 1));
+$("#trust-next").addEventListener("click", () => setTrust(tIdx + 1));
+TRUST.forEach(t => { const im = new Image(); im.src = A + t.img; });
+
+/* ================= PROGRAMS ================= */
+stacked($("#programs-title"));
+const progList = $("#prog-list");
+PROGRAMS.forEach((p, i) => {
+  const li = document.createElement("li");
+  li.innerHTML = `<a href="${p.href}"><div class="prog-row">
+    <span class="prog-idx">${p.i}</span>
+    <div class="prog-body"><div class="prog-name">${p.name}</div><p class="prog-desc">${p.desc}</p></div>
+    <span class="prog-arrow">${ICON.arrow}</span></div></a>`;
+  progList.appendChild(li);
+  inview($(".prog-row", li), { opacity: 0, y: 26 }, { opacity: 1, y: 0 }, { delay: i * 90, config: { tension: 190, friction: 26 } });
+  hover($("a", li), $(".prog-arrow", li), { x: 0, opacity: 0.55 }, { x: 8, opacity: 1 }, { tension: 300, friction: 20 });
+});
+
+/* ================= FACILITIES ================= */
+inview($("#fac-icon"), { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1 }, { config: { tension: 240, friction: 20 } });
+stacked($("#facilities-title"), { stagger: 120 });
+{
+  const body = $("#fac-body");
+  const words = body.textContent.trim().split(/\s+/);
+  body.innerHTML = words.map(w => `<span class="fw">${w}</span>`).join(" ");
+  const spans = $$(".fw", body);
+  onceInView(body, () => spans.forEach((s, i) => s.animate(
+    [{ transform: "translateY(18px)", opacity: 0 }, { transform: "translateY(0)", opacity: 1 }],
+    { duration: 700, delay: 250 + i * 28, easing: EASE.outQuart, fill: "both" }
+  )));
+}
+const courts = $("#courts");
+COURTS.forEach((c, i) => {
+  const fig = document.createElement("figure");
+  fig.className = "court";
+  fig.innerHTML = `<div class="court-tile"><img src="${A + c.img}" alt="${c.alt}" loading="lazy" decoding="async" />
+    <figcaption class="court-cap ${c.tone}"><div class="court-name">${c.name}</div><div class="court-desc">${c.desc}</div></figcaption></div>`;
+  courts.appendChild(fig);
+  inview(fig, { opacity: 0, y: 48 }, { opacity: 1, y: 0 }, { delay: i * 140, config: { tension: 180, friction: 26 } });
+  hover($(".court-tile", fig), $("img", fig), { scale: 1 }, { scale: 1.03 }, { tension: 300, friction: 22 });
+});
+
+/* ================= STATS ================= */
+stacked($("#stats-title"));
+const statsGrid = $("#stats-grid");
+STATS.forEach((s, i) => {
+  const d = document.createElement("div");
+  d.className = "stat";
+  d.innerHTML = `<dt class="sr-only">${s.l}</dt><dd><div class="stat-val">${s.v}</div><div class="stat-label">${s.l}</div></dd>`;
+  statsGrid.appendChild(d);
+  inview(d, { opacity: 0, y: 30 }, { opacity: 1, y: 0 }, { delay: i * 110, config: { tension: 180, friction: 24 } });
+});
+
+/* ================= TESTIMONIALS ================= */
+stacked($("#testimonials-title"));
+const tGrid = $("#t-grid");
+TESTIMONIALS.forEach((t, i) => {
+  const li = document.createElement("li");
+  li.innerHTML = `<figure class="t-card"><div><div class="t-quote" aria-hidden="true">“</div>
+    <blockquote>${t.q}</blockquote></div>
+    <figcaption><div class="t-name">${t.n}</div><div class="t-role">${t.r}</div></figcaption></figure>`;
+  tGrid.appendChild(li);
+  inview(li, { opacity: 0, y: 40 }, { opacity: 1, y: 0 }, { delay: i * 120, config: { tension: 180, friction: 26 } });
+  hover($(".t-card", li), $(".t-card", li), { y: 0 }, { y: -8 }, { tension: 300, friction: 22 });
+});
+
+/* ================= FOOTER ================= */
+stacked($(".f-cta-title"));
+inview($("#footer-cta"), { opacity: 0, y: 20 }, { opacity: 1, y: 0 }, { delay: 150, config: { tension: 200, friction: 24 } });
+
+/* ================= MENU OVERLAY ================= */
+const menu = $("#menu"), burger = $("#burger");
+const menuBd = new Spring({ opacity: 0 }, v => $("#menu-backdrop").style.opacity = v.opacity, { tension: 260, friction: 30 });
+const menuPanel = new Spring({ opacity: 0, y: -24 }, tf($("#menu-panel")), { tension: 220, friction: 28 });
+const menuLinks = $$(".menu-link").map(a => new Spring({ opacity: 0, y: 28 }, tf(a), { tension: 200, friction: 26 }));
+let menuOpen = false, menuTimers = [];
+function openMenu() {
+  if (menuOpen) return;
+  menuOpen = true;
+  menu.classList.add("open"); menu.inert = false; menu.setAttribute("aria-hidden", "false");
+  burger.setAttribute("aria-expanded", "true");
+  lock("menu");
+  menuBd.to({ opacity: 1 }); menuPanel.to({ opacity: 1, y: 0 });
+  menuTimers = menuLinks.map((s, i) => setTimeout(() => s.to({ opacity: 1, y: 0 }), 120 + i * 70));
+  setTimeout(() => $("#menu-close").focus({ preventScroll: true }), 50);
+}
+function closeMenu(restoreFocus = true) {
+  if (!menuOpen) return;
+  menuOpen = false;
+  menuTimers.forEach(clearTimeout);
+  menu.classList.remove("open"); menu.inert = true; menu.setAttribute("aria-hidden", "true");
+  burger.setAttribute("aria-expanded", "false");
+  menuBd.to({ opacity: 0 }); menuPanel.to({ opacity: 0, y: -24 });
+  menuLinks.forEach(s => s.to({ opacity: 0, y: 28 }));
+  unlock("menu");
+  if (restoreFocus) burger.focus({ preventScroll: true });
+}
+burger.addEventListener("click", openMenu);
+$("#menu-close").addEventListener("click", () => closeMenu());
+$("#menu-backdrop").addEventListener("click", () => closeMenu());
+$$("#menu a[href^='#']").forEach(a => a.addEventListener("click", e => {
+  e.preventDefault();
+  const id = a.getAttribute("href");
+  closeMenu(false);
+  const el = id === "#" ? document.body : document.querySelector(id);
+  if (el) requestAnimationFrame(() => scrollToTarget(el));
+}));
+$("#menu-book").addEventListener("click", () => { closeMenu(false); openModal(); });
+
+/* ================= CONTACT MODAL ================= */
+const modal = $("#modal"), form = $("#visit-form"), submitBtn = $("#f-submit"), success = $("#success");
+const modalBd = new Spring({ opacity: 0 }, v => $("#modal-backdrop").style.opacity = v.opacity, { tension: 240, friction: 30 });
+const modalPanel = new Spring({ opacity: 0, y: 28, scale: 0.96 }, tf($("#modal-panel")), { tension: 240, friction: 26 });
+const modalTitle = stacked($("#modal-title"), { stagger: 90, duration: 800, auto: false });
+let modalOpen = false, lastFocus = null, resetTimer = null, sendTimer = null;
+function resetForm() {
+  clearTimeout(sendTimer);
+  form.reset(); form.hidden = false; success.hidden = true;
+  submitBtn.disabled = false; submitBtn.textContent = "Request a visit";
+}
+function openModal() {
+  if (modalOpen) return;
+  modalOpen = true;
+  clearTimeout(resetTimer);
+  lastFocus = document.activeElement;
+  modal.classList.add("open"); modal.inert = false; modal.setAttribute("aria-hidden", "false");
+  lock("modal");
+  modalBd.to({ opacity: 1 }); modalPanel.to({ opacity: 1, y: 0, scale: 1 });
+  modalTitle.reset(); modalTitle.play();
+  setTimeout(() => $("#f-name").focus({ preventScroll: true }), 120);
+}
+function closeModal() {
+  if (!modalOpen) return;
+  modalOpen = false;
+  modal.classList.remove("open"); modal.inert = true; modal.setAttribute("aria-hidden", "true");
+  modalBd.to({ opacity: 0 }); modalPanel.to({ opacity: 0, y: 28, scale: 0.96 });
+  unlock("modal");
+  resetTimer = setTimeout(resetForm, 350);
+  if (lastFocus && document.contains(lastFocus) && !lastFocus.closest("#menu")) lastFocus.focus({ preventScroll: true });
+}
+$$("[data-open-modal]").forEach(b => b.addEventListener("click", openModal));
+$("#modal-close").addEventListener("click", closeModal);
+$("#modal-backdrop").addEventListener("click", closeModal);
+$("#success-done").addEventListener("click", closeModal);
+// Submit is a local stub — no network request is ever made.
+form.addEventListener("submit", e => {
+  e.preventDefault();
+  if (submitBtn.disabled) return;
+  submitBtn.disabled = true; submitBtn.textContent = "Sending…";
+  const first = (form.elements.name.value.trim().split(/\s+/)[0]) || "there";
+  sendTimer = setTimeout(() => {
+    $("#success-text").textContent = `Thanks, ${first} — our team will be in touch to lock in your visit.`;
+    form.hidden = true; success.hidden = false;
+    $("#success-done").focus({ preventScroll: true });
+  }, 700);
+});
+document.addEventListener("keydown", e => {
+  if (e.key !== "Escape") return;
+  if (modalOpen) closeModal(); else if (menuOpen) closeMenu();
+});
+
+/* ================= LOADER ================= */
+{
+  const MIN_VISIBLE_MS = reduceMotion ? 200 : 1400, MAX_VISIBLE_MS = 2600, EXIT_MS = reduceMotion ? 0 : 850;
+  const loader = $("#loader");
+  lock("loader");
+  new Spring({ opacity: 0, y: 16 }, tf($("#loader-mark")), { tension: 200, friction: 22 }).to({ opacity: 1, y: 0 });
+  $("#loader-fill").animate([{ transform: "scaleX(0)" }, { transform: "scaleX(1)" }],
+    { delay: 120, duration: Math.max(80, MIN_VISIBLE_MS - 120), easing: EASE.inOutCubic, fill: "both" });
+  let started = false, done = false;
+  const finish = () => {
+    if (done) return;
+    done = true;
+    resolveReady();
+    unlock("loader");
+    window.scrollTo(0, 0);
+    if (EXIT_MS) loader.animate([{ transform: "translateY(0%)" }, { transform: "translateY(-105%)" }],
+      { duration: EXIT_MS, easing: EASE.inOutCubic, fill: "forwards" });
+    setTimeout(() => loader.remove(), EXIT_MS);
+  };
+  const begin = () => { if (started) return; started = true; setTimeout(finish, MIN_VISIBLE_MS); };
+  if (document.readyState === "complete") begin(); else addEventListener("load", begin, { once: true });
+  setTimeout(finish, MAX_VISIBLE_MS);
+}
+</script>
+</body>
+</html>
