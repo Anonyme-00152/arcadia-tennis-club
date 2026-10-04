@@ -14,7 +14,14 @@ Site vitrine complet d'un club de tennis parisien (fictif). HTML, CSS et JavaScr
 - **Avis, agenda des événements (inscription), FAQ, contact** (horaires et statut « ouvert / fermé » en direct, carte, formulaire validé)
 - **Bilingue FR / EN**, choix mémorisé
 
-Les formulaires sont des démos : ils valident les saisies mais n'envoient rien. Pour les brancher, remplacez `fakeSubmit()` dans `js/main.js` par un appel à votre backend (Formspree, Resend, API…).
+## Formulaires et e-mails
+
+Les 6 formulaires (contact, réservation de court, cours d'essai, adhésion, inscription aux événements, newsletter) envoient chaque demande par e-mail via [Web3Forms](https://web3forms.com), avec un objet clair, tous les détails et un numéro de référence. Le bouton « Répondre » de l'e-mail répond directement au visiteur.
+
+- La clé se règle dans `js/config.js` (clé publique, prévue pour le code côté client). Vide = mode démo, rien n'est envoyé.
+- Anti-spam : champ piège invisible (`botcheck`).
+- En cas d'échec d'envoi, le formulaire reste rempli et un message d'erreur s'affiche.
+- Les créneaux de la page de réservation restent simulés : la demande est envoyée par e-mail, à confirmer par le club.
 
 ## Qualité
 

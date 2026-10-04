@@ -78,6 +78,7 @@ const UI = {
   menuOpen: { fr: "Ouvrir le menu", en: "Open menu" },
   menuClose: { fr: "Fermer le menu", en: "Close menu" },
   ref: { fr: "Référence", en: "Reference" },
+  sendErr: { fr: "L'envoi a échoué. Réessayez ou appelez-nous au 01 99 00 42 18.", en: "Sending failed. Please try again or call us on +33 1 99 00 42 18." },
   hour: { fr: "h", en: "h" },
 };
 const U = (k, ...a) => { const v = L(UI[k]); return typeof v === "function" ? v(...a) : v; };
@@ -588,6 +589,7 @@ function renderSlots() {
 function fmtDate(d, long) {
   return new Intl.DateTimeFormat(locale(), long ? { weekday: "long", day: "numeric", month: "long" } : { weekday: "short", day: "numeric", month: "short" }).format(d);
 }
+const fmtDateFr = d => new Intl.DateTimeFormat("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric" }).format(d);
 const hm = h => { const H = Math.floor(h), M = Math.round((h - H) * 60); return `${String(H).padStart(2, "0")}:${String(M).padStart(2, "0")}`; };
 function bookingTotal() {
   const d = dayDate(bk.day);
@@ -766,12 +768,40 @@ function liveClear(form) {
   form.addEventListener("input", e => { const w = e.target.closest(".invalid"); if (w) { w.classList.remove("invalid"); e.target.removeAttribute("aria-invalid"); } });
   form.addEventListener("change", e => { const w = e.target.closest(".invalid"); if (w) w.classList.remove("invalid"); });
 }
-function fakeSubmit(btn) {
-  btn.disabled = true;
-  const label = btn.querySelector("span");
+/* ------------------------------------------------------------------ */
+/* Email delivery (Web3Forms)                                          */
+/* ------------------------------------------------------------------ */
+const FORM_KEY = ((window.ARCADIA_CONFIG || {}).web3formsKey || "").trim();
+const HONEYPOT = '<input class="hp" type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" />';
+// Sends one request to the club's inbox. Without a key the site runs in demo mode.
+async function sendForm(form, subject, fields, replyTo) {
+  if (form?.querySelector('[name="botcheck"]')?.checked) return; // bot: pretend success
+  if (!FORM_KEY) { await new Promise(r => setTimeout(r, 600)); return; }
+  const res = await fetch("https://api.web3forms.com/submit", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    body: JSON.stringify({
+      access_key: FORM_KEY,
+      subject,
+      from_name: "Site Arcadia Tennis Club",
+      replyto: replyTo,
+      "Langue du site": lang.toUpperCase(),
+      ...fields,
+    }),
+  });
+  const json = await res.json().catch(() => ({}));
+  if (!res.ok || !json.success) throw new Error(json.message || `HTTP ${res.status}`);
+}
+// Runs a send with a busy button; returns true on success, shows an error toast otherwise.
+async function submitting(btn, task) {
+  const label = btn.querySelector("span") || btn;
   const prev = label.textContent;
-  label.textContent = "…";
-  return new Promise(r => setTimeout(() => { btn.disabled = false; label.textContent = prev; r(); }, 700));
+  btn.disabled = true;
+  btn.setAttribute("aria-busy", "true");
+  if (label !== btn) label.textContent = L({ fr: "Envoi…", en: "Sending…" });
+  try { await task(); return true; }
+  catch (err) { console.error("Form delivery failed:", err); toast(U("sendErr")); return false; }
+  finally { btn.disabled = false; btn.removeAttribute("aria-busy"); if (label !== btn) label.textContent = prev; }
 }
 function initContact() {
   const form = $("#contact-form");
@@ -779,18 +809,24 @@ function initContact() {
   form.addEventListener("submit", async e => {
     e.preventDefault();
     if (!validate(form)) return;
-    await fakeSubmit($("button[type=submit]", form));
+    const d = Object.fromEntries(new FormData(form));
+    const ok = await submitting($("button[type=submit]", form), () => sendForm(form, `Contact — ${d.subject} — ${d.first} ${d.last}`, {
+      "Prénom": d.first, "Nom": d.last, "E-mail": d.email, "Sujet": d.subject, "Message": d.message,
+    }, d.email));
+    if (!ok) return;
     $(".form-ok", form).hidden = false;
     form.reset();
     toast(L({ fr: "Message envoyé — merci !", en: "Message sent — thank you!" }));
   });
-  $("#news-form").addEventListener("submit", e => {
+  $("#news-form").addEventListener("submit", async e => {
     e.preventDefault();
-    const inp = $("#news-email"), msg = $("#news-msg");
-    const ok = emailOk(inp.value);
-    msg.textContent = ok ? U("newsOk") : U("newsBad");
+    const nf = e.currentTarget, inp = $("#news-email"), msg = $("#news-msg");
+    if (!emailOk(inp.value)) { msg.textContent = U("newsBad"); msg.classList.add("bad"); inp.focus(); return; }
+    const email = inp.value.trim();
+    const ok = await submitting($("button[type=submit]", nf), () => sendForm(nf, `Newsletter — nouvelle inscription : ${email}`, { "E-mail": email }, email));
+    msg.textContent = ok ? U("newsOk") : U("sendErr");
     msg.classList.toggle("bad", !ok);
-    if (ok) inp.value = ""; else inp.focus();
+    if (ok) inp.value = "";
   });
 }
 
@@ -836,15 +872,20 @@ const doneView = (title, text, ref) => `<div class="m-done">
   ${ref ? `<span class="ref">${U("ref")} · ${ref}</span><br />` : ""}
   <button class="btn btn-navy" type="button" data-close>${U("done")}</button></div>`;
 const refCode = () => "ARC-" + Math.random().toString(36).slice(2, 7).toUpperCase();
-function wireModalForm(onDone) {
+// build(data, ref) -> [subject, fields]; onDone(data, ref) -> success view HTML
+function wireModalForm(build, onDone) {
   const form = $("form", mbody);
+  form.insertAdjacentHTML("afterbegin", HONEYPOT);
   liveClear(form);
   form.addEventListener("submit", async e => {
     e.preventDefault();
     if (!validate(form)) return;
-    await fakeSubmit($("button[type=submit]", form));
-    const data = Object.fromEntries(new FormData(form));
-    mbody.innerHTML = onDone(data);
+    const data = Object.fromEntries(new FormData(form)), ref = refCode();
+    const [subject, fields] = build(data, ref);
+    const contact = { "Nom": data.name, "E-mail": data.email, "Téléphone": data.phone };
+    const ok = await submitting($("button[type=submit]", form), () => sendForm(form, `${subject} — ${data.name}`, { ...fields, ...contact, "Référence": ref }, data.email));
+    if (!ok) return;
+    mbody.innerHTML = onDone(data, ref);
     $("button", mbody)?.focus();
   });
 }
@@ -868,11 +909,14 @@ function openBookingModal() {
       <button class="btn btn-ball btn-block" type="submit"><span>${U("confirm")}</span><svg class="i"><use href="#i-arrow"/></svg></button>
     </form>`);
   const snap = { d, h: bk.hour, dur: bk.dur, c };
-  wireModalForm(() => {
+  wireModalForm(() => ["Réservation de court", {
+    "Date": fmtDateFr(snap.d), "Horaire": `${hm(snap.h)} – ${hm(snap.h + snap.dur)}`,
+    "Court": courtName(snap.c), "Durée": DURATIONS.find(x => x.v === snap.dur).l, "Total": `${total} €`,
+  }], (data, ref) => {
     for (let k = 0; k < Math.ceil(snap.dur); k++) booked.add(`${iso(snap.d)}|${snap.h + k}|${snap.c.id}`);
     bk.hour = null; bk.court = null;
     renderSlots(); updateHeroFree();
-    return doneView(U("bookedTitle"), U("bookedSub", fmtDate(snap.d, true), hm(snap.h)), refCode());
+    return doneView(U("bookedTitle"), U("bookedSub", fmtDate(snap.d, true), hm(snap.h)), ref);
   });
 }
 function openTrialModal(progI) {
@@ -887,7 +931,8 @@ function openTrialModal(progI) {
       <div class="f-row">${sel("prog", L({ fr: "Programme", en: "Program" }), progNames, progI ?? 0)}${sel("level", U("level"), U("levels"))}</div>
       <button class="btn btn-ball btn-block" type="submit"><span>${U("send")}</span><svg class="i"><use href="#i-arrow"/></svg></button>
     </form>`);
-  wireModalForm(data => doneView(U("trialDoneT"), U("trialDoneD", (data.name || "").split(" ")[0])));
+  wireModalForm(data => ["Demande de cours d'essai", { "Programme": data.prog, "Niveau": data.level }],
+    data => doneView(U("trialDoneT"), U("trialDoneD", (data.name || "").split(" ")[0])));
 }
 function openEventModal(i) {
   const e = EVENTS[i];
@@ -902,7 +947,8 @@ function openEventModal(i) {
       ${sel("level", U("level"), U("levels"))}
       <button class="btn btn-ball btn-block" type="submit"><span>${U("register")}</span><svg class="i"><use href="#i-arrow"/></svg></button>
     </form>`);
-  wireModalForm(() => { e.left = Math.max(0, e.left - 1); renderEvents(); return doneView(U("evDoneT"), U("evDoneD", L(e.title)), refCode()); });
+  wireModalForm(data => [`Inscription événement : ${e.title.fr}`, { "Événement": e.title.fr, "Date": fmtDateFr(new Date(e.d + "T12:00:00")), "Niveau": data.level }],
+    (data, ref) => { e.left = Math.max(0, e.left - 1); renderEvents(); return doneView(U("evDoneT"), U("evDoneD", L(e.title)), ref); });
 }
 function openPlanModal(id) {
   const p = PLANS.find(x => x.id === id);
@@ -917,7 +963,10 @@ function openPlanModal(id) {
       ${sel("who", U("forWho"), U("forWhoOpts"))}
       <button class="btn btn-ball btn-block" type="submit"><span>${U("join")}</span><svg class="i"><use href="#i-arrow"/></svg></button>
     </form>`);
-  wireModalForm(() => doneView(U("planDoneT"), U("planDoneD", L(p.name)), refCode()));
+  const period = billing;
+  wireModalForm(data => [`Demande d'adhésion : ${p.name.fr}`, {
+    "Formule": p.name.fr, "Facturation": period === "m" ? `Mensuelle — ${p.m} €/mois` : `Annuelle — ${yearly} €/an`, "Pour qui": data.who,
+  }], (data, ref) => doneView(U("planDoneT"), U("planDoneD", L(p.name)), ref));
 }
 document.addEventListener("click", e => {
   const t = e.target.closest("[data-open]");
