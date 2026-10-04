@@ -1,1071 +1,528 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Arcadia — Tennis Club & Academy</title>
-<meta name="description" content="Arcadia Tennis Club & Academy, Paris — focused coaching, championship courts." />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Arcadia — Tennis Club & Académie · Paris 16e</title>
+<meta name="description" content="Arcadia, club de tennis et académie à Paris 16e. 12 courts terre battue et dur, 24 coachs diplômés d'État, réservation en ligne, stages juniors et compétition." />
+<meta name="theme-color" content="#0b1d3f" />
+<meta name="color-scheme" content="light" />
+<link rel="canonical" href="https://baseline-tennis-club-ruddy.vercel.app/" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Arcadia Tennis Club" />
+<meta property="og:title" content="Arcadia — Tennis Club & Académie · Paris" />
+<meta property="og:description" content="12 courts, 24 coachs, réservation en direct. Venez jouer au meilleur niveau." />
+<meta property="og:image" content="assets/hero/hero-court.webp" />
+<meta property="og:locale" content="fr_FR" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%230b1d3f'/%3E%3Ccircle cx='16' cy='16' r='8.5' fill='none' stroke='%23d7f04b' stroke-width='2'/%3E%3Cpath d='M10 10.5a8.5 8.5 0 0 1 0 11M22 10.5a8.5 8.5 0 0 0 0 11' fill='none' stroke='%23d7f04b' stroke-width='2'/%3E%3C/svg%3E" />
+
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Onest:wght@400;500;600&display=swap" rel="stylesheet" />
 <link rel="preload" as="image" href="assets/hero/hero-court.webp" fetchpriority="high" />
-<script type="importmap">
-{ "imports": { "lenis": "https://cdn.jsdelivr.net/npm/lenis@1.1.18/+esm" } }
+<link rel="stylesheet" href="css/styles.css" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SportsActivityLocation",
+  "name": "Arcadia Tennis Club & Académie",
+  "image": "assets/hero/hero-court.webp",
+  "telephone": "+33 1 99 00 42 18",
+  "email": "contact@arcadia-tennis.fr",
+  "address": { "@type": "PostalAddress", "streetAddress": "18 allée des Courts", "postalCode": "75016", "addressLocality": "Paris", "addressCountry": "FR" },
+  "openingHoursSpecification": [
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "07:00", "closes": "23:00" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday","Sunday"], "opens": "08:00", "closes": "21:00" }
+  ],
+  "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "1248" }
+}
 </script>
-<script>
-  // Adaptive rem grid — scale up above 1920px (media queries handle scale-down)
-  (function () {
-    var FONT_BASE = 16, BASE_W = 1920, COEF = 0.6666, html = document.documentElement;
-    function fit() {
-      var reduction = ((BASE_W - innerWidth) / BASE_W) * 100 * COEF;
-      var size = FONT_BASE - (FONT_BASE * reduction) / 100;
-      if (size > FONT_BASE) html.style.fontSize = size + "px";
-      else html.style.removeProperty("font-size");
-    }
-    fit();
-    addEventListener("resize", fit);
-    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-  })();
-</script>
-<style>
-  :root {
-    --background: #ffffff; --foreground: #0a0a0a;
-    --brand: #2563c9; --brand-deep: #0f2f63; --brand-light: #5790e6;
-    --accent-teal: #0b6e97; --surface: #f4f4f4; --surface-card: #ffffff;
-    --ink: #0a0a0a; --ink-soft: #717784; --ghost: #d7dae1; --hairline: #e6e8ec;
-    --on-brand: #ffffff;
-    --radius-card: 1.5rem; --radius-card-lg: 2rem; --radius-pill: 62.5rem;
-    --expo: cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  html { font-size: 16px; }
-  @media (max-width: 1920px) { html { font-size: 0.833333vw; } }
-  @media (max-width: 1440px) { html { font-size: 1.111111vw; } }
-  @media (max-width: 1024px) { html { font-size: 1.5625vw; } }
-  @media (max-width: 640px)  { html { font-size: 4.444444vw; } }
-
-  /* Lenis */
-  html.lenis, html.lenis body { height: auto; }
-  .lenis.lenis-smooth { scroll-behavior: auto !important; }
-  .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-  .lenis.lenis-stopped { overflow: hidden; }
-
-  *, *::before, *::after { box-sizing: border-box; }
-  * { margin: 0; padding: 0; }
-  img { display: block; max-width: 100%; }
-  button { cursor: pointer; font: inherit; color: inherit; background: none; border: 0; }
-  a { color: inherit; text-decoration: none; }
-  ul { list-style: none; }
-  input, textarea { font: inherit; color: inherit; }
-  :focus-visible { outline: 2px solid var(--brand-light); outline-offset: 2px; }
-  body {
-    min-height: 100vh; background: var(--background); color: var(--foreground);
-    font-family: "Onest", system-ui, sans-serif; -webkit-font-smoothing: antialiased;
-  }
-  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
-  main { width: 100%; overflow-x: clip; padding: 0.5rem; }
-  @media (min-width: 640px) { main { padding: 0.75rem; } }
-
-  /* ---------- Shared ---------- */
-  .mark { width: 1.25rem; height: 1.25rem; flex: none; }
-  .eyebrow { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.22em; color: var(--ink-soft); }
-  .eyebrow::before { content: ""; width: 0.375rem; height: 0.375rem; border-radius: var(--radius-pill); background: var(--brand); }
-  .eyebrow.light { color: rgba(255,255,255,0.7); }
-  .eyebrow.light::before { background: var(--brand-light); }
-
-  .pill { display: inline-flex; align-items: center; gap: 0.5rem; border-radius: var(--radius-pill); padding: 0.875rem 1.75rem; font-size: 0.875rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.025em; border: 1px solid transparent; transition: background-color .25s, color .25s, border-color .25s; white-space: nowrap; }
-  .pill svg { width: 1rem; height: 1rem; }
-  .pill-light { background: #fff; color: var(--brand-deep); }
-  .pill-light:hover { background: var(--brand-light); color: #fff; }
-  .pill-solid { background: var(--ink); color: #fff; }
-  .pill-solid:hover { background: var(--brand-deep); }
-  .pill-outline { border-color: currentColor; color: var(--ink); }
-  .pill-outline:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
-
-  .arrow-btn { width: 3rem; height: 3rem; display: grid; place-items: center; border-radius: var(--radius-pill); border: 1px solid; transition: background-color .25s, border-color .25s; }
-  @media (min-width: 640px) { .arrow-btn { width: 3.5rem; height: 3.5rem; } }
-  .arrow-btn .ico { display: grid; place-items: center; }
-  .arrow-btn svg { width: 1.25rem; height: 1.25rem; }
-  .arrow-btn.prev svg { transform: scaleX(-1); }
-  .arrow-btn.outline { border-color: var(--hairline); color: var(--ink); }
-  .arrow-btn.outline:hover { border-color: var(--ink); }
-  .arrow-btn.solid { background: var(--ink); border-color: var(--ink); color: #fff; }
-  .arrow-btn.solid:hover { background: var(--brand-deep); border-color: var(--brand-deep); }
-
-  .dots { display: flex; gap: 0.5rem; align-items: center; }
-  .dot { padding: 0.375rem; line-height: 0; }
-  .dot i { display: block; height: 0.375rem; width: 0.375rem; border-radius: var(--radius-pill); background: var(--ghost); transition: width .4s var(--expo), background-color .3s; }
-  .dot[aria-current="true"] i { width: 1.25rem; background: var(--ink); }
-  .dots.light .dot i { background: rgba(255,255,255,0.4); }
-  .dots.light .dot[aria-current="true"] i { background: #fff; }
-
-  /* Reveal primitives */
-  .stack .line { display: block; overflow: hidden; padding-bottom: 0.14em; margin-bottom: -0.14em; }
-  .stack .line > span { display: block; transform: translateY(115%); opacity: 0; will-change: transform; }
-  .w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: 0.04em; }
-  .w > span { display: inline-block; transform: translateY(115%); opacity: 0; will-change: transform; }
-  .fw { display: inline-block; opacity: 0; transform: translateY(18px); }
-
-  .h-section { font-size: 3rem; font-weight: 500; line-height: 0.95; letter-spacing: -0.025em; margin-top: 1rem; }
-
-  .glass { border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.1); padding: 0.75rem; border-radius: var(--radius-card); box-shadow: 0 1.25rem 2.5rem rgba(15,47,99,0.2); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
-
-  /* ---------- Header ---------- */
-  .site-header { position: relative; z-index: 5; display: flex; align-items: center; padding: 1.5rem 1.5rem 0; font-size: 0.75rem; color: #fff; }
-  @media (min-width: 640px) { .site-header { padding: 2rem 2.5rem 0; } }
-  .hdr-left { display: none; flex: 1; gap: 2rem; }
-  .hdr-left a { opacity: 0.9; transition: opacity .2s; }
-  .hdr-left a:hover { opacity: 1; }
-  .brand { flex: 1; display: flex; align-items: center; gap: 0.5rem; font-size: 1rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.2em; }
-  @media (min-width: 1024px) { .hdr-left { display: flex; } .site-header .brand { justify-content: center; } }
-  .hdr-right { flex: 1; display: flex; justify-content: flex-end; align-items: center; gap: 1rem; }
-  @media (min-width: 640px) { .hdr-right { gap: 1.25rem; } }
-  .hdr-book { display: inline-block; text-transform: uppercase; letter-spacing: 0.025em; font-size: 0.75rem; text-underline-offset: 0.25em; }
-  .hdr-book:hover { text-decoration: underline; }
-  .round-btn { width: 2.5rem; height: 2.5rem; display: grid; place-items: center; place-content: center; border-radius: var(--radius-pill); background: rgba(255,255,255,0.15); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); transition: background-color .25s; color: #fff; }
-  .round-btn:hover { background: rgba(255,255,255,0.25); }
-  .burger { gap: 5px; }
-  .burger span { display: block; width: 1rem; height: 1px; background: #fff; }
-  .round-btn svg { width: 1.1rem; height: 1.1rem; }
-
-  /* ---------- Hero ---------- */
-  .hero { position: relative; isolation: isolate; overflow: hidden; background: var(--brand-deep); color: #fff; border-radius: var(--radius-card-lg); height: calc(100svh - 1rem); min-height: 36rem; display: flex; flex-direction: column; }
-  @media (min-width: 640px) { .hero { height: calc(100svh - 1.5rem); } }
-  .hero-bg { position: absolute; inset: 0; z-index: -10; }
-  .hero-plate { position: absolute; left: 0; right: 0; top: -16%; height: 132%; width: 100%; will-change: transform; }
-  .hero-plate img { width: 100%; height: 100%; object-fit: cover; }
-  .hero-grad { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(15,47,99,0.65), rgba(15,47,99,0.35), rgba(15,47,99,0.75)); }
-  .hero-title-wrap { padding: 1rem 1.5rem 0; }
-  @media (min-width: 640px) { .hero-title-wrap { padding: 1rem 2.5rem 0; } }
-  .hero-title { font-size: 12.5vw; font-weight: 500; text-transform: uppercase; line-height: 0.85; letter-spacing: -0.02em; white-space: nowrap; }
-  .hero-bottom { margin-top: auto; padding: 0 1.5rem 2rem; display: flex; flex-direction: column; gap: 1.5rem; }
-  @media (min-width: 640px) { .hero-bottom { padding: 0 2.5rem 2.5rem; flex-direction: row; justify-content: space-between; align-items: flex-end; } }
-  .hero-tagline { font-size: 2.4rem; font-weight: 500; text-transform: uppercase; line-height: 0.95; letter-spacing: -0.025em; color: rgba(255,255,255,0.85); }
-  .hero-cluster { display: flex; align-items: flex-end; gap: 1rem; }
-  .collection { display: flex; width: 16rem; flex-direction: column; gap: 0.75rem; }
-  @media (max-width: 639px) {
-    .hero-cluster { flex-direction: column; align-items: stretch; gap: 0.75rem; }
-    .collection { width: 100%; gap: 0.5rem; }
-    .collection .dots { justify-content: center; }
-    .member-card { max-width: none; }
-  }
-  .cs-stage { display: grid; }
-  .cs-card { grid-area: 1 / 1; display: flex; gap: 0.75rem; }
-  .cs-card img { width: 3.5rem; height: 3.5rem; border-radius: 0.75rem; object-fit: cover; flex: none; }
-  .cs-text { display: flex; flex-direction: column; justify-content: space-between; min-width: 0; }
-  .cs-brand { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.025em; }
-  .cs-title { font-size: 0.7rem; text-transform: uppercase; opacity: 0.8; }
-  .cs-cta { font-size: 0.65rem; text-decoration: underline; text-underline-offset: 0.2em; }
-  .member-card { width: 100%; max-width: 20rem; display: flex; gap: 0.75rem; align-items: stretch; }
-  @media (min-width: 640px) { .member-card { max-width: 15rem; } }
-  .member-left { flex: 1; display: flex; flex-direction: column; justify-content: space-between; gap: 0.5rem; }
-  .member-val { font-size: 1.875rem; font-weight: 500; line-height: 1; }
-  .avatars { display: flex; }
-  .avatars span { width: 1.25rem; height: 1.25rem; border-radius: var(--radius-pill); border: 1px solid rgba(15,47,99,0.4); }
-  .avatars span + span { margin-left: -0.5rem; }
-  .member-cap { font-size: 0.65rem; opacity: 0.8; }
-  .member-card img { width: 4rem; aspect-ratio: 3 / 4; border-radius: 0.75rem; object-fit: cover; flex: none; }
-
-  /* ---------- Trust ---------- */
-  .trust { position: relative; isolation: isolate; overflow: hidden; background: var(--background); padding: 4rem 1.5rem; }
-  @media (min-width: 640px) { .trust { padding: 5rem 2.5rem; } }
-  .trust-top { position: relative; z-index: 20; display: flex; flex-direction: column; gap: 1.5rem; }
-  @media (min-width: 640px) { .trust-top { flex-direction: row; justify-content: space-between; align-items: flex-start; } }
-  .pct-badge { width: 7rem; height: 7rem; border-radius: var(--radius-pill); background: var(--surface); display: grid; place-items: center; text-align: center; flex: none; }
-  @media (min-width: 640px) { .pct-badge { width: 8rem; height: 8rem; } }
-  .pct { display: block; font-size: 1.5rem; font-weight: 500; }
-  .pct-cap { display: block; font-size: 0.6rem; color: var(--ink-soft); max-width: 7em; margin: 0.25rem auto 0; line-height: 1.3; }
-  .badge-card { max-width: 28rem; display: flex; gap: 1rem; align-items: flex-start; border-radius: var(--radius-card); background: var(--surface); padding: 1.25rem; }
-  @media (min-width: 640px) { .badge-card { gap: 1.25rem; padding: 1.5rem; } }
-  .chip { border-radius: 0.75rem; background: var(--background); padding: 0.5rem 1rem; font-size: 1.25rem; font-weight: 500; flex: none; }
-  .badge-card h3 { font-size: 1.125rem; font-weight: 500; }
-  .badge-card p { font-size: 0.75rem; color: var(--ink-soft); line-height: 1.625; margin-top: 0.375rem; }
-  .ghost-heading { position: relative; z-index: 0; pointer-events: none; user-select: none; max-width: 88rem; margin: 3rem auto 0; font-size: 8.2vw; font-weight: 500; text-transform: uppercase; line-height: 1.02; letter-spacing: -0.025em; color: var(--ghost); }
-  .ghost-row { display: flex; justify-content: space-between; }
-  @media (max-width: 639px) {
-    .ghost-heading { font-size: 13vw; }
-    .ghost-row { flex-direction: column; align-items: flex-start; }
-    .ghost-row .ghost-word:nth-child(2) { align-self: flex-end; }
-  }
-  .ghost-word { display: inline-block; will-change: transform; }
-  .ghost-word .clip { display: block; overflow: hidden; padding-bottom: 0.12em; margin-bottom: -0.12em; }
-  .ghost-word .inner { display: block; transform: translateY(115%); opacity: 0; }
-  .ghost-word.ink { color: var(--ink); }
-  .coach-pos { position: relative; z-index: 10; width: 13rem; margin: 2.5rem auto 0; }
-  @media (min-width: 640px) { .coach-pos { position: absolute; left: 50%; top: 50%; width: 16rem; margin: 0; transform: translate(-50%, -50%); } }
-  .coach-card { position: relative; transform: rotate(6deg); aspect-ratio: 3 / 4; border-radius: var(--radius-card); background: var(--brand); overflow: hidden; }
-  .coach-imgs, .coach-imgs img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  .coach-cap { position: absolute; left: 0.75rem; right: 0.75rem; bottom: 0.75rem; border-radius: 0.75rem; background: rgba(15,47,99,0.4); color: #fff; -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); padding: 0.5rem 0.75rem; }
-  .coach-name { font-size: 0.875rem; font-weight: 500; }
-  .coach-role { font-size: 0.65rem; opacity: 0.8; }
-  .trust-controls { position: relative; z-index: 20; margin-top: 3rem; display: flex; justify-content: space-between; align-items: center; }
-  @media (min-width: 640px) { .trust-controls { margin-top: 6rem; } }
-
-  /* ---------- Programs ---------- */
-  .programs { background: var(--surface); padding: 6rem 1.5rem; }
-  @media (min-width: 640px) { .programs { padding: 6rem 2.5rem; } }
-  .prog-list { margin-top: 3.5rem; }
-  .prog-list a { display: block; border-top: 1px solid var(--hairline); transition: background-color .2s; }
-  .prog-list li:last-child a { border-bottom: 1px solid var(--hairline); }
-  .prog-list a:focus-visible { background: var(--background); }
-  .prog-row { display: flex; align-items: center; gap: 1.5rem; padding: 1.75rem 0; }
-  .prog-idx { width: 2.5rem; flex: none; font-size: 0.875rem; font-weight: 500; color: var(--ink-soft); }
-  .prog-body { flex: 1; min-width: 0; }
-  .prog-name { font-size: 1.5rem; font-weight: 500; letter-spacing: -0.025em; }
-  @media (min-width: 640px) { .prog-name { font-size: 1.875rem; } }
-  .prog-desc { font-size: 0.875rem; color: var(--ink-soft); margin-top: 0.25rem; }
-  .prog-arrow { width: 2.75rem; height: 2.75rem; flex: none; display: grid; place-items: center; border-radius: var(--radius-pill); border: 1px solid var(--hairline); }
-  .prog-arrow svg { width: 1.25rem; height: 1.25rem; }
-
-  /* ---------- Facilities ---------- */
-  .facilities { position: relative; z-index: 1; background: var(--background); border-radius: var(--radius-card-lg); margin-top: -2.5rem; padding: 4rem 1.5rem 5rem; }
-  @media (min-width: 640px) { .facilities { padding: 4rem 2.5rem 5rem; } }
-  .fac-grid { display: grid; grid-template-columns: 1fr; align-items: end; gap: 2.5rem; }
-  @media (min-width: 768px) { .fac-grid { grid-template-columns: 1fr 1fr; } }
-  .fac-intro { max-width: 24rem; }
-  .fac-icon { width: 4rem; height: 4rem; border-radius: var(--radius-card); object-fit: cover; }
-  .fac-intro .h-section { margin-top: 1.5rem; }
-  .fac-body { font-size: 0.875rem; color: var(--ink-soft); max-width: 20rem; margin-top: 1.5rem; line-height: 1.5; }
-  .courts { display: flex; align-items: flex-end; gap: 1.25rem; }
-  .court { flex: 1; min-width: 0; }
-  .court:nth-child(2) { margin-bottom: 2rem; }
-  @media (max-width: 639px) {
-    .courts { gap: 0.75rem; }
-    .court-cap { left: 0.5rem; right: 0.5rem; bottom: 0.5rem; padding: 0.5rem 0.625rem; border-radius: 0.625rem; }
-    .court-name { font-size: 0.8rem; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .court-desc { font-size: 0.6rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-  }
-  /* Touch: give taps the same colour feedback as mouse hover */
-  @media (hover: none) {
-    .pill-light:active { background: var(--brand-light); color: #fff; }
-    .pill-solid:active, .submit:active { background: var(--brand-deep); }
-    .arrow-btn.outline:active { border-color: var(--ink); }
-    .arrow-btn.solid:active { background: var(--brand-deep); border-color: var(--brand-deep); }
-    .round-btn:active { background: rgba(255,255,255,0.25); }
-    .menu-link:active { color: var(--brand-light); }
-    * { -webkit-tap-highlight-color: transparent; }
-  }
-  .court-tile { position: relative; aspect-ratio: 3 / 4; border-radius: var(--radius-card); overflow: hidden; background: var(--surface); }
-  .court-tile img { width: 100%; height: 100%; object-fit: cover; will-change: transform; }
-  .court-cap { position: absolute; left: 0.75rem; right: 0.75rem; bottom: 0.75rem; border-radius: 0.75rem; -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); color: #fff; padding: 0.75rem 1rem; }
-  .court-cap.blue { background: rgba(11,110,151,0.55); }
-  .court-cap.clay { background: rgba(15,47,99,0.4); }
-  .court-name { font-size: 0.875rem; font-weight: 500; }
-  .court-desc { font-size: 0.65rem; opacity: 0.85; margin-top: 0.125rem; line-height: 1.4; }
-
-  /* ---------- Stats ---------- */
-  .stats { background: var(--brand-deep); color: #fff; border-radius: var(--radius-card-lg); margin-top: 0.75rem; padding: 5rem 1.5rem; }
-  @media (min-width: 640px) { .stats { padding: 5rem 2.5rem; } }
-  .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); column-gap: 2rem; row-gap: 3rem; margin-top: 4rem; }
-  @media (min-width: 1024px) { .stats-grid { grid-template-columns: repeat(4, 1fr); } }
-  .stat { border-top: 1px solid rgba(255,255,255,0.2); padding-top: 1.25rem; }
-  .stat-val { font-size: 3.75rem; font-weight: 500; letter-spacing: -0.025em; line-height: 1; }
-  @media (min-width: 640px) { .stat-val { font-size: 4.5rem; } }
-  .stat-label { font-size: 0.875rem; color: rgba(255,255,255,0.65); margin-top: 0.75rem; }
-
-  /* ---------- Testimonials ---------- */
-  .testimonials { background: var(--background); padding: 5rem 1.5rem; }
-  @media (min-width: 640px) { .testimonials { padding: 6rem 2.5rem; } }
-  .t-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; margin-top: 3.5rem; }
-  @media (min-width: 768px) { .t-grid { grid-template-columns: repeat(3, 1fr); } }
-  .t-grid li { display: flex; }
-  .t-card { display: flex; flex-direction: column; justify-content: space-between; height: 100%; width: 100%; border-radius: var(--radius-card); background: var(--surface); padding: 1.75rem; }
-  .t-quote { font-size: 2.25rem; color: var(--brand); line-height: 1; }
-  .t-card blockquote { font-size: 1.125rem; line-height: 1.625; color: var(--ink); margin-top: 1rem; }
-  .t-card figcaption { border-top: 1px solid var(--hairline); padding-top: 1rem; margin-top: 1.5rem; }
-  .t-name { font-weight: 500; }
-  .t-role { font-size: 0.875rem; color: var(--ink-soft); }
-
-  /* ---------- Footer ---------- */
-  .footer { background: var(--brand-deep); color: #fff; border-radius: var(--radius-card-lg); margin-top: 0.75rem; padding: 3.5rem 1.5rem; }
-  @media (min-width: 640px) { .footer { padding: 4rem 2.5rem; } }
-  .f-cta { border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 3.5rem; display: flex; flex-direction: column; align-items: flex-start; gap: 2rem; }
-  @media (min-width: 640px) { .f-cta { flex-direction: row; justify-content: space-between; align-items: flex-end; } }
-  .f-cta-title { font-size: 3.75rem; font-weight: 500; line-height: 0.92; letter-spacing: -0.025em; margin-top: 1rem; }
-  .f-cols { padding: 3.5rem 0; display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem 1.5rem; }
-  .f-brand-col { grid-column: 1 / -1; }
-  @media (min-width: 768px) { .f-brand-col { grid-column: auto; } }
-  @media (min-width: 768px) { .f-cols { grid-template-columns: 1.4fr 1fr 1fr 1fr; } }
-  .f-brand-col { max-width: 20rem; }
-  .f-brand { display: flex; align-items: center; gap: 0.5rem; font-size: 1.125rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.2em; }
-  .f-blurb { font-size: 0.875rem; color: rgba(255,255,255,0.65); margin-top: 1rem; line-height: 1.5; }
-  .f-address { font-style: normal; margin-top: 1.5rem; color: rgba(255,255,255,0.8); font-size: 0.875rem; display: flex; flex-direction: column; gap: 0.375rem; }
-  .f-address a:hover { color: #fff; }
-  .f-address .muted { color: rgba(255,255,255,0.55); }
-  .f-nav h3 { font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.2em; color: rgba(255,255,255,0.5); }
-  .f-nav ul { font-size: 0.875rem; color: rgba(255,255,255,0.8); margin-top: 1rem; display: flex; flex-direction: column; gap: 0.75rem; }
-  .f-nav a { transition: color .2s; }
-  .f-nav a:hover { color: #fff; }
-  .f-bottom { border-top: 1px solid rgba(255,255,255,0.15); padding-top: 2rem; font-size: 0.875rem; color: rgba(255,255,255,0.6); display: flex; flex-direction: column; gap: 1.25rem; }
-  @media (min-width: 640px) { .f-bottom { flex-direction: row; justify-content: space-between; align-items: center; } }
-  .f-bottom nav { display: flex; gap: 1.25rem; flex-wrap: wrap; }
-  .f-bottom a:hover { color: #fff; }
-
-  /* ---------- Menu overlay ---------- */
-  .menu { position: fixed; inset: 0; z-index: 70; display: flex; flex-direction: column; pointer-events: none; color: #fff; }
-  .menu.open { pointer-events: auto; }
-  .menu-backdrop { position: absolute; inset: 0; background: var(--brand-deep); opacity: 0; }
-  .menu-panel { position: relative; flex: 1; display: flex; flex-direction: column; padding: 0.5rem; opacity: 0; }
-  @media (min-width: 640px) { .menu-panel { padding: 0.75rem; } }
-  .menu-inner { flex: 1; display: flex; flex-direction: column; padding: 1.5rem; }
-  @media (min-width: 640px) { .menu-inner { padding: 2rem 2.5rem; } }
-  .menu-top { display: flex; justify-content: space-between; align-items: center; }
-  .menu-top .brand { flex: none; }
-  .menu-nav { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 0.5rem; }
-  .menu-link { display: block; width: max-content; font-size: 3rem; font-weight: 500; letter-spacing: -0.025em; line-height: 1.05; transition: color .2s; }
-  @media (min-width: 640px) { .menu-link { font-size: 4.5rem; } }
-  .menu-link:hover { color: var(--brand-light); }
-  .menu-bottom { border-top: 1px solid rgba(255,255,255,0.15); padding-top: 2rem; display: flex; flex-direction: column; gap: 1.5rem; }
-  @media (min-width: 640px) { .menu-bottom { flex-direction: row; justify-content: space-between; align-items: center; } }
-  .menu-social { display: flex; gap: 1.25rem; font-size: 0.875rem; color: rgba(255,255,255,0.7); }
-  .menu-social a:hover { color: #fff; }
-
-  /* ---------- Modal ---------- */
-  .modal { position: fixed; inset: 0; z-index: 90; display: flex; align-items: flex-end; justify-content: center; padding: 0.75rem; pointer-events: none; }
-  @media (min-width: 640px) { .modal { align-items: center; padding: 1.5rem; } }
-  .modal.open { pointer-events: auto; }
-  .modal-backdrop { position: absolute; inset: 0; background: rgba(15,47,99,0.4); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); opacity: 0; }
-  .modal-panel { position: relative; width: 100%; max-height: 92svh; overflow-y: auto; border-radius: var(--radius-card-lg); background: var(--surface-card); padding: 1.5rem; color: var(--ink); box-shadow: 0 2rem 5rem rgba(15,47,99,0.35); opacity: 0; }
-  @media (min-width: 640px) { .modal-panel { padding: 2rem; max-width: 32rem; } }
-  .modal-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
-  .modal-title { font-size: 2.25rem; font-weight: 500; line-height: 0.95; letter-spacing: -0.025em; margin-top: 0.75rem; }
-  @media (min-width: 640px) { .modal-title { font-size: 3rem; } }
-  .close-dark { width: 2.5rem; height: 2.5rem; flex: none; display: grid; place-items: center; border-radius: var(--radius-pill); background: var(--surface); transition: background-color .2s; }
-  .close-dark:hover { background: var(--hairline); }
-  .close-dark svg, .close-light svg { width: 1.1rem; height: 1.1rem; }
-  .v-form { margin-top: 1.75rem; display: flex; flex-direction: column; gap: 1rem; }
-  .field { display: flex; flex-direction: column; gap: 0.5rem; }
-  .field span { font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.18em; color: var(--ink-soft); }
-  .field input, .field textarea { width: 100%; border-radius: 0.75rem; border: 1px solid var(--hairline); background: var(--background); padding: 0.75rem 1rem; font-size: 0.875rem; outline: none; resize: vertical; transition: border-color .2s, box-shadow .2s; }
-  .field input:focus, .field textarea:focus { border-color: var(--brand-light); box-shadow: 0 0 0 2px rgba(87,144,230,0.35); }
-  .submit { align-self: flex-start; margin-top: 0.5rem; border-radius: var(--radius-pill); background: var(--ink); color: #fff; padding: 0.875rem 1.75rem; font-size: 0.875rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.025em; transition: background-color .25s, opacity .25s; }
-  .submit:hover { background: var(--brand-deep); }
-  .submit:disabled { opacity: 0.6; cursor: default; }
-  .success { margin-top: 2rem; border-radius: var(--radius-card); background: var(--surface); padding: 1.5rem; text-align: center; }
-  .success-ico { width: 3rem; height: 3rem; margin: 0 auto; display: grid; place-items: center; border-radius: var(--radius-pill); background: var(--brand); color: #fff; }
-  .success-ico svg { width: 1.5rem; height: 1.5rem; }
-  .success h3 { font-size: 1.125rem; font-weight: 500; margin-top: 1rem; }
-  .success p { font-size: 0.875rem; color: var(--ink-soft); margin-top: 0.5rem; line-height: 1.5; }
-  .success .submit { align-self: auto; margin-top: 1.25rem; }
-
-  /* ---------- Loader ---------- */
-  .loader { position: fixed; inset: 0; z-index: 200; background: var(--brand-deep); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
-  .loader-mark { display: flex; align-items: center; gap: 0.5rem; font-size: 1.5rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.2em; opacity: 0; }
-  .loader-mark .mark { width: 1.75rem; height: 1.75rem; }
-  .loader-track { width: 10rem; height: 1px; border-radius: var(--radius-pill); background: rgba(255,255,255,0.2); overflow: hidden; }
-  .loader-fill { height: 100%; background: #fff; transform: scaleX(0); transform-origin: left; }
-</style>
 </head>
 <body>
 
-<!-- ========== LOADER ========== -->
+<a class="skip" href="#main" data-i18n="skip">Aller au contenu</a>
+
+<!-- ============ LOADER ============ -->
 <div class="loader" id="loader" aria-hidden="true">
-  <div class="loader-mark" id="loader-mark"><svg class="mark" data-mark></svg><span>Arcadia</span></div>
-  <div class="loader-track"><div class="loader-fill" id="loader-fill"></div></div>
+  <div class="loader-inner">
+    <svg class="loader-ball" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20"/><path d="M11 9.5a20 20 0 0 1 0 29M37 9.5a20 20 0 0 0 0 29"/></svg>
+    <span class="loader-word">Arcadia</span>
+    <span class="loader-count" id="loader-count">0</span>
+  </div>
 </div>
 
-<main>
-  <!-- ========== HERO ========== -->
-  <section class="hero" id="hero" aria-labelledby="hero-title">
-    <div class="hero-bg" aria-hidden="false">
-      <div class="hero-plate" id="hero-plate">
-        <img src="assets/hero/hero-court.webp" alt="Player lunging for a shot on a hard court" loading="eager" fetchpriority="high" decoding="async" />
-      </div>
-      <div class="hero-grad"></div>
+<!-- ============ HEADER ============ -->
+<header class="header" id="header">
+  <div class="header-in">
+    <a class="logo" href="#top" aria-label="Arcadia — accueil">
+      <svg class="logo-mark" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M5.2 5.6a9 9 0 0 1 0 12.8M18.8 5.6a9 9 0 0 0 0 12.8"/></svg>
+      <span>Arcadia</span>
+    </a>
+    <nav class="nav" aria-label="Navigation principale">
+      <a href="#club" data-i18n="nav.club">Le club</a>
+      <a href="#programmes" data-i18n="nav.programs">Programmes</a>
+      <a href="#coachs" data-i18n="nav.coaches">Coachs</a>
+      <a href="#courts" data-i18n="nav.courts">Courts</a>
+      <a href="#tarifs" data-i18n="nav.pricing">Tarifs</a>
+      <a href="#agenda" data-i18n="nav.events">Agenda</a>
+    </nav>
+    <div class="header-actions">
+      <button class="lang" type="button" id="lang-toggle" aria-label="Switch to English"><span data-l="fr">FR</span><i></i><span data-l="en">EN</span></button>
+      <a class="btn btn-ball btn-sm header-cta" href="#reserver"><span data-i18n="cta.book">Réserver un court</span></a>
+      <button class="burger" type="button" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
     </div>
+  </div>
+</header>
 
-    <header class="site-header">
-      <nav class="hdr-left" aria-label="Primary">
-        <a href="#programs">Programs &amp; Coaches</a>
-        <a href="#facilities">Club &amp; Events</a>
-      </nav>
-      <a class="brand" href="#" aria-label="Arcadia home"><svg class="mark" data-mark></svg><span>Arcadia</span></a>
-      <div class="hdr-right">
-        <button class="hdr-book" type="button" data-open-modal>Book a Visit</button>
-        <button class="round-btn burger" type="button" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
-      </div>
-    </header>
+<!-- ============ MOBILE MENU ============ -->
+<div class="menu" id="menu" aria-hidden="true" inert>
+  <nav class="menu-nav" aria-label="Menu">
+    <a href="#club"><small>01</small><span data-i18n="nav.club">Le club</span></a>
+    <a href="#programmes"><small>02</small><span data-i18n="nav.programs">Programmes</span></a>
+    <a href="#coachs"><small>03</small><span data-i18n="nav.coaches">Coachs</span></a>
+    <a href="#courts"><small>04</small><span data-i18n="nav.courts">Courts</span></a>
+    <a href="#tarifs"><small>05</small><span data-i18n="nav.pricing">Tarifs</span></a>
+    <a href="#agenda"><small>06</small><span data-i18n="nav.events">Agenda</span></a>
+    <a href="#contact"><small>07</small><span data-i18n="nav.contact">Contact</span></a>
+  </nav>
+  <div class="menu-foot">
+    <a class="btn btn-ball" href="#reserver"><span data-i18n="cta.book">Réserver un court</span><svg class="i"><use href="#i-arrow"/></svg></a>
+    <p><a href="tel:+33199004218">+33 1 99 00 42 18</a><br /><a href="mailto:contact@arcadia-tennis.fr">contact@arcadia-tennis.fr</a></p>
+  </div>
+</div>
 
-    <div class="hero-title-wrap">
-      <h1 id="hero-title" class="hero-title">Own The Court</h1>
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="top" aria-labelledby="hero-title">
+    <div class="hero-media" aria-hidden="true">
+      <img id="hero-img" src="assets/hero/hero-court.webp" alt="" fetchpriority="high" decoding="async" />
     </div>
+    <div class="hero-shade" aria-hidden="true"></div>
 
-    <div class="hero-bottom">
-      <p class="hero-tagline stack" id="hero-tagline" data-lines="Show Up,|Level Up"></p>
-      <div class="hero-cluster">
-        <div class="collection" id="collection">
-          <div class="cs-stage" id="cs-stage"></div>
-          <div class="dots light" id="cs-dots"></div>
+    <div class="hero-content wrap">
+      <p class="hero-kicker reveal-up"><span class="live-dot" aria-hidden="true"></span><span id="open-status" data-i18n="hero.kicker">Tennis Club &amp; Académie · Paris 16e</span></p>
+      <h1 class="hero-title" id="hero-title">
+        <span class="ln"><span data-i18n="hero.t1">Prenez</span></span>
+        <span class="ln"><span data-i18n-html="hero.t2">le <em>court.</em></span></span>
+      </h1>
+      <div class="hero-row">
+        <p class="hero-sub reveal-up" data-i18n="hero.sub">Douze courts de championnat, vingt-quatre coachs diplômés d'État et une méthode qui se voit au tableau d'affichage. Du premier échange au classement national.</p>
+        <div class="hero-ctas reveal-up">
+          <a class="btn btn-ball" href="#reserver"><span data-i18n="cta.book">Réserver un court</span><svg class="i"><use href="#i-arrow"/></svg></a>
+          <button class="btn btn-glass" type="button" data-open="trial"><span data-i18n="cta.trial">Cours d'essai offert</span></button>
         </div>
-        <article class="member-card glass" id="member-card">
-          <div class="member-left">
-            <div class="member-val">9K+</div>
-            <div class="avatars" aria-hidden="true">
-              <span style="background:#5790e6"></span><span style="background:#c2e029"></span><span style="background:#0b6e97"></span><span style="background:#ffffff"></span>
-            </div>
-            <div class="member-cap">Members on court</div>
+      </div>
+    </div>
+
+    <div class="hero-cards wrap" aria-label="En direct">
+      <div class="glass-card live-card reveal-up">
+        <div class="live-head"><span class="pulse" aria-hidden="true"></span><span data-i18n="hero.live">Disponible aujourd'hui</span></div>
+        <div class="live-val"><strong id="hero-free">—</strong> <span id="hero-slots">créneaux libres</span></div>
+        <a href="#reserver" class="live-link"><span data-i18n="hero.see">Voir le planning</span> <svg class="i"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div class="glass-card rate-card reveal-up">
+        <div class="stars" aria-hidden="true"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></div>
+        <div class="rate-val">4,9<span>/5</span></div>
+        <div class="rate-cap" data-i18n="hero.reviews">1 248 avis vérifiés</div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ============ MARQUEE ============ -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track" id="marquee"></div>
+  </div>
+
+  <!-- ============ CLUB / INTRO ============ -->
+  <section class="section club" id="club" aria-labelledby="club-title">
+    <div class="wrap club-grid">
+      <div class="club-text">
+        <p class="eyebrow reveal-up" data-i18n="club.eyebrow">Le club</p>
+        <h2 class="h2 split" id="club-title" data-i18n-html="club.title">Un club exigeant, <em>une maison</em> chaleureuse.</h2>
+        <p class="lead reveal-up" data-i18n="club.lead">Depuis 2011, Arcadia réunit joueurs loisirs, familles et compétiteurs autour d'une même idée : chaque séance doit vous faire progresser. Coaching individualisé, analyse vidéo, préparation physique — et un club-house où l'on aime rester après le match.</p>
+        <ul class="club-points">
+          <li class="reveal-up"><svg class="i"><use href="#i-check"/></svg><span data-i18n="club.p1">Label « Club Formateur » et école de tennis agréée</span></li>
+          <li class="reveal-up"><svg class="i"><use href="#i-check"/></svg><span data-i18n="club.p2">Analyse vidéo et suivi de progression dans l'appli membre</span></li>
+          <li class="reveal-up"><svg class="i"><use href="#i-check"/></svg><span data-i18n="club.p3">Courts couverts et éclairés, jouables toute l'année</span></li>
+        </ul>
+      </div>
+      <div class="club-visual">
+        <figure class="club-img club-img-a parallax" data-speed="-6"><img src="assets/3.webp" alt="Joueur en pleine course pour un coup droit sur terre battue" loading="lazy" decoding="async" /></figure>
+        <figure class="club-img club-img-b parallax" data-speed="8"><img src="assets/5.webp" alt="Joueur en position d'attente sur terre battue" loading="lazy" decoding="async" /></figure>
+        <div class="club-badge">
+          <svg viewBox="0 0 120 120" class="badge-ring" aria-hidden="true"><defs><path id="circ" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0"/></defs><text><textPath href="#circ" data-i18n="club.ring">• DEPUIS 2011 • PARIS 16E • TENNIS CLUB </textPath></text></svg>
+          <svg class="badge-ball" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M5.2 5.6a9 9 0 0 1 0 12.8M18.8 5.6a9 9 0 0 0 0 12.8"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <dl class="wrap stats" id="stats">
+      <div class="stat"><dt data-i18n="stats.coaches">Coachs diplômés d'État</dt><dd><span class="count" data-to="24">0</span></dd></div>
+      <div class="stat"><dt data-i18n="stats.courts">Courts de championnat</dt><dd><span class="count" data-to="12">0</span></dd></div>
+      <div class="stat"><dt data-i18n="stats.members">Membres actifs</dt><dd><span class="count" data-to="9200" data-format="k">0</span></dd></div>
+      <div class="stat"><dt data-i18n="stats.ranked">Juniors classés en 2025</dt><dd><span class="count" data-to="138">0</span></dd></div>
+    </dl>
+  </section>
+
+  <!-- ============ PROGRAMS ============ -->
+  <section class="section programs" id="programmes" aria-labelledby="programs-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow reveal-up" data-i18n="programs.eyebrow">Programmes d'entraînement</p>
+          <h2 class="h2 split" id="programs-title" data-i18n-html="programs.title">Pensés pour <em>chaque niveau.</em></h2>
+        </div>
+        <p class="sec-aside reveal-up" data-i18n="programs.aside">Un bilan offert avec un coach pour trouver le groupe qui vous correspond. Changement de programme possible à tout moment.</p>
+      </div>
+
+      <div class="prog" id="prog">
+        <div class="prog-tabs" role="tablist" aria-label="Programmes" id="prog-tabs"></div>
+        <div class="prog-panel" id="prog-panel" role="tabpanel" tabindex="0"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COACHES ============ -->
+  <section class="section coaches" id="coachs" aria-labelledby="coaches-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow light reveal-up" data-i18n="coaches.eyebrow">L'équipe</p>
+          <h2 class="h2 split" id="coaches-title" data-i18n-html="coaches.title">Des coachs qui ont <em>joué le circuit.</em></h2>
+        </div>
+        <div class="slider-ctrl">
+          <button class="round" type="button" id="coach-prev" aria-label="Coach précédent"><svg class="i flip"><use href="#i-arrow"/></svg></button>
+          <button class="round round-ball" type="button" id="coach-next" aria-label="Coach suivant"><svg class="i"><use href="#i-arrow"/></svg></button>
+        </div>
+      </div>
+    </div>
+    <div class="coach-rail" id="coach-rail" tabindex="0" aria-label="Coachs"></div>
+    <div class="wrap"><div class="rail-progress"><i id="coach-bar"></i></div></div>
+  </section>
+
+  <!-- ============ COURTS / FACILITIES ============ -->
+  <section class="section courts" id="courts" aria-labelledby="courts-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow reveal-up" data-i18n="courts.eyebrow">Installations</p>
+          <h2 class="h2 split" id="courts-title" data-i18n-html="courts.title">Des courts de <em>niveau tournoi.</em></h2>
+        </div>
+        <p class="sec-aside reveal-up" data-i18n="courts.aside">Entretenus chaque jour par nos jardiniers. Les mêmes conditions que celles où vous jouerez vos matchs.</p>
+      </div>
+
+      <div class="court-grid">
+        <article class="court-card court-lg reveal-up">
+          <img src="assets/2.webp" alt="Joueur exécutant un revers sur un court en dur bleu" loading="lazy" decoding="async" />
+          <div class="court-info">
+            <span class="tag tag-blue" data-i18n="courts.hard">Dur · Greenset</span>
+            <h3 data-i18n="courts.c1">Harbor — 6 courts</h3>
+            <p data-i18n="courts.c1d">Surface rapide, éclairage LED tournoi, 2 courts couverts pour jouer par tous les temps.</p>
           </div>
-          <img src="assets/1.webp" alt="Player waiting to return on a clay court" loading="lazy" decoding="async" />
+        </article>
+        <article class="court-card reveal-up">
+          <img src="assets/1.webp" alt="Joueur en fond de court sur terre battue" loading="lazy" decoding="async" />
+          <div class="court-info">
+            <span class="tag tag-clay" data-i18n="courts.clay">Terre battue</span>
+            <h3 data-i18n="courts.c2">Redline — 4 courts</h3>
+            <p data-i18n="courts.c2d">Brique pilée traditionnelle, pour de longs échanges physiques.</p>
+          </div>
+        </article>
+        <article class="court-card reveal-up">
+          <img src="assets/4.webp" alt="Joueur au service sur un court en dur" loading="lazy" decoding="async" />
+          <div class="court-info">
+            <span class="tag tag-ball" data-i18n="courts.indoor">Couvert</span>
+            <h3 data-i18n="courts.c3">Le Dôme — 2 courts</h3>
+            <p data-i18n="courts.c3d">Résine indoor, chauffage, idéal pour l'hiver et les cours du soir.</p>
+          </div>
         </article>
       </div>
+
+      <ul class="amen" aria-label="Services">
+        <li class="reveal-up"><svg class="i"><use href="#i-house"/></svg><div><strong data-i18n="am.1">Club-house &amp; terrasse</strong><span data-i18n="am.1d">Café, brunch le week-end</span></div></li>
+        <li class="reveal-up"><svg class="i"><use href="#i-drop"/></svg><div><strong data-i18n="am.2">Vestiaires &amp; sauna</strong><span data-i18n="am.2d">Casiers sécurisés, serviettes</span></div></li>
+        <li class="reveal-up"><svg class="i"><use href="#i-racket"/></svg><div><strong data-i18n="am.3">Pro shop &amp; cordage</strong><span data-i18n="am.3d">Cordage en 24 h, test de raquettes</span></div></li>
+        <li class="reveal-up"><svg class="i"><use href="#i-bolt"/></svg><div><strong data-i18n="am.4">Salle de préparation</strong><span data-i18n="am.4d">Physique, kiné sur rendez-vous</span></div></li>
+        <li class="reveal-up"><svg class="i"><use href="#i-car"/></svg><div><strong data-i18n="am.5">Parking &amp; vélos</strong><span data-i18n="am.5d">80 places, bornes électriques</span></div></li>
+        <li class="reveal-up"><svg class="i"><use href="#i-video"/></svg><div><strong data-i18n="am.6">Analyse vidéo</strong><span data-i18n="am.6d">Caméras sur 4 courts</span></div></li>
+      </ul>
     </div>
   </section>
 
-  <!-- ========== TRUST ========== -->
-  <section class="trust" id="trust" aria-labelledby="trust-title">
-    <div class="trust-top">
-      <div class="pct-badge" id="pct-badge"><div><span class="pct">100%</span><span class="pct-cap">Coaching built around your game</span></div></div>
-      <article class="badge-card" id="badge-card">
-        <span class="chip">#01</span>
+  <!-- ============ BOOKING ============ -->
+  <section class="section booking" id="reserver" aria-labelledby="booking-title">
+    <div class="wrap">
+      <div class="sec-head">
         <div>
-          <h3>Trusted by serious players</h3>
-          <p>From first-timers to nationally ranked juniors, players train here because the progress shows up on the scoreboard.</p>
+          <p class="eyebrow reveal-up" data-i18n="book.eyebrow">Réservation en ligne</p>
+          <h2 class="h2 split" id="booking-title" data-i18n-html="book.title">Votre court, <em>en 30 secondes.</em></h2>
         </div>
-      </article>
-    </div>
+        <p class="sec-aside reveal-up" data-i18n="book.aside">Ouvert aux membres et aux non-membres. Annulation gratuite jusqu'à 24 h avant.</p>
+      </div>
 
-    <h2 class="ghost-heading" id="trust-title">
-      <span class="ghost-row">
-        <span class="ghost-word"><span class="clip"><span class="inner"></span></span></span>
-        <span class="ghost-word"><span class="clip"><span class="inner"></span></span></span>
-      </span>
-      <span class="ghost-row">
-        <span class="ghost-word ink"><span class="clip"><span class="inner"></span></span></span>
-        <span class="ghost-word"><span class="clip"><span class="inner"></span></span></span>
-      </span>
-    </h2>
+      <div class="book reveal-up">
+        <div class="book-main">
+          <div class="book-step">
+            <h3 class="step-title"><span>1</span><span data-i18n="book.s1">Choisissez une date</span></h3>
+            <div class="days" id="days" role="radiogroup" aria-label="Date"></div>
+          </div>
+          <div class="book-step">
+            <div class="step-row">
+              <h3 class="step-title"><span>2</span><span data-i18n="book.s2">Surface &amp; durée</span></h3>
+            </div>
+            <div class="filters">
+              <div class="seg" id="surface" role="radiogroup" aria-label="Surface"></div>
+              <div class="seg" id="duration" role="radiogroup" aria-label="Durée"></div>
+            </div>
+          </div>
+          <div class="book-step">
+            <div class="step-row">
+              <h3 class="step-title"><span>3</span><span data-i18n="book.s3">Choisissez un créneau</span></h3>
+              <div class="legend"><span><i class="lg-off"></i><span data-i18n="book.off">Heures creuses</span></span><span><i class="lg-peak"></i><span data-i18n="book.peak">Heures pleines</span></span></div>
+            </div>
+            <div class="slots" id="slots" role="radiogroup" aria-label="Créneau"></div>
+          </div>
+        </div>
 
-    <div class="coach-pos">
-      <div id="coach-in">
-        <figure class="coach-card">
-          <div class="coach-imgs" id="coach-imgs"></div>
-          <figcaption class="coach-cap"><div class="coach-name" id="coach-name"></div><div class="coach-role" id="coach-role"></div></figcaption>
-        </figure>
+        <aside class="book-summary" aria-live="polite">
+          <p class="eyebrow light" data-i18n="book.sum">Récapitulatif</p>
+          <dl class="sum-list">
+            <div><dt data-i18n="book.date">Date</dt><dd id="sum-date">—</dd></div>
+            <div><dt data-i18n="book.time">Horaire</dt><dd id="sum-time">—</dd></div>
+            <div><dt data-i18n="book.court">Court</dt><dd id="sum-court">—</dd></div>
+            <div><dt data-i18n="book.dur">Durée</dt><dd id="sum-dur">—</dd></div>
+          </dl>
+          <div class="sum-total">
+            <span data-i18n="book.total">Total</span>
+            <strong id="sum-price">—</strong>
+          </div>
+          <p class="sum-note" data-i18n="book.note">Membres Compétiteur &amp; Famille : réservation incluse.</p>
+          <button class="btn btn-ball btn-block" type="button" id="book-go" disabled><span data-i18n="book.go">Continuer</span><svg class="i"><use href="#i-arrow"/></svg></button>
+        </aside>
       </div>
     </div>
-
-    <div class="trust-controls">
-      <button class="arrow-btn outline prev" type="button" id="trust-prev" aria-label="Previous coach"><span class="ico"><svg data-arrow></svg></span></button>
-      <div class="dots" id="trust-dots"></div>
-      <button class="arrow-btn solid" type="button" id="trust-next" aria-label="Next coach"><span class="ico"><svg data-arrow></svg></span></button>
-    </div>
   </section>
 
-  <!-- ========== PROGRAMS ========== -->
-  <section class="programs" id="programs" aria-labelledby="programs-title">
-    <span class="eyebrow">Training programs</span>
-    <h2 class="h-section stack" id="programs-title" data-lines="Built for|every level"></h2>
-    <ul class="prog-list" id="prog-list"></ul>
-  </section>
-
-  <!-- ========== FACILITIES ========== -->
-  <section class="facilities" id="facilities" aria-labelledby="facilities-title">
-    <div class="fac-grid">
-      <div class="fac-intro">
-        <img class="fac-icon" id="fac-icon" src="assets/3.webp" alt="Player stretching for a forehand on clay" loading="lazy" decoding="async" />
-        <h2 class="h-section stack" id="facilities-title" data-lines="Tour Our|World-Class|Courts"></h2>
-        <p class="fac-body" id="fac-body">Reserve a court for focused practice, squad drills, or private sessions — and train in the same conditions you'll compete in.</p>
+  <!-- ============ PRICING ============ -->
+  <section class="section pricing" id="tarifs" aria-labelledby="pricing-title">
+    <div class="wrap">
+      <div class="sec-head center">
+        <p class="eyebrow reveal-up" data-i18n="price.eyebrow">Adhésion 2026–2027</p>
+        <h2 class="h2 split" id="pricing-title" data-i18n-html="price.title">Une formule <em>pour votre jeu.</em></h2>
+        <div class="billing reveal-up" role="radiogroup" aria-label="Facturation">
+          <button type="button" role="radio" aria-checked="true" data-bill="m" data-i18n="price.monthly">Mensuel</button>
+          <button type="button" role="radio" aria-checked="false" data-bill="y"><span data-i18n="price.yearly">Annuel</span> <em>−15%</em></button>
+        </div>
       </div>
-      <div class="courts" id="courts"></div>
+      <div class="plans" id="plans"></div>
+      <p class="plans-note reveal-up" data-i18n="price.note">Tarifs TTC. Licence fédérale incluse. Réduction étudiants –25 % sur présentation d'un justificatif. Paiement en 3 fois sans frais.</p>
     </div>
   </section>
 
-  <!-- ========== STATS ========== -->
-  <section class="stats" aria-labelledby="stats-title">
-    <span class="eyebrow light">By the numbers</span>
-    <h2 class="h-section stack" id="stats-title" data-lines="A club that|keeps score"></h2>
-    <dl class="stats-grid" id="stats-grid"></dl>
+  <!-- ============ TESTIMONIALS ============ -->
+  <section class="section reviews" id="avis" aria-labelledby="reviews-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow reveal-up" data-i18n="rev.eyebrow">Ils jouent chez nous</p>
+          <h2 class="h2 split" id="reviews-title" data-i18n-html="rev.title">Adopté par <em>les vestiaires.</em></h2>
+        </div>
+        <div class="rev-score reveal-up">
+          <div class="rev-big">4,9</div>
+          <div><div class="stars dark" aria-hidden="true"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></div><span data-i18n="hero.reviews">1 248 avis vérifiés</span></div>
+        </div>
+      </div>
+      <div class="rev-grid" id="rev-grid"></div>
+    </div>
   </section>
 
-  <!-- ========== TESTIMONIALS ========== -->
-  <section class="testimonials" id="testimonials" aria-labelledby="testimonials-title">
-    <span class="eyebrow">What players say</span>
-    <h2 class="h-section stack" id="testimonials-title" data-lines="Loved by|the locker room"></h2>
-    <ul class="t-grid" id="t-grid"></ul>
+  <!-- ============ EVENTS ============ -->
+  <section class="section events" id="agenda" aria-labelledby="events-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow reveal-up" data-i18n="ev.eyebrow">Agenda du club</p>
+          <h2 class="h2 split" id="events-title" data-i18n-html="ev.title">Prochains <em>rendez-vous.</em></h2>
+        </div>
+        <p class="sec-aside reveal-up" data-i18n="ev.aside">Tournois homologués, soirées double et stages vacances. Inscriptions ouvertes à tous.</p>
+      </div>
+      <ul class="ev-list" id="ev-list"></ul>
+    </div>
   </section>
 
-  <!-- ========== FOOTER ========== -->
-  <footer class="footer" id="contact">
-    <div class="f-cta">
+  <!-- ============ FAQ ============ -->
+  <section class="section faq" id="faq" aria-labelledby="faq-title">
+    <div class="wrap faq-grid">
       <div>
-        <span class="eyebrow light">Get started</span>
-        <p class="f-cta-title stack" data-lines="Ready to|play?"></p>
+        <p class="eyebrow reveal-up" data-i18n="faq.eyebrow">Questions fréquentes</p>
+        <h2 class="h2 split" id="faq-title" data-i18n-html="faq.title">Tout ce qu'il faut <em>savoir.</em></h2>
+        <p class="lead reveal-up" data-i18n="faq.lead">Une autre question ? Notre accueil vous répond 7 j/7.</p>
+        <a class="btn btn-outline reveal-up" href="#contact"><span data-i18n="faq.cta">Nous contacter</span><svg class="i"><use href="#i-arrow"/></svg></a>
       </div>
-      <button class="pill pill-light" type="button" id="footer-cta" data-open-modal data-arrow-hover>Book a Visit <svg data-arrow></svg></button>
+      <div class="acc" id="faq-list"></div>
     </div>
-    <div class="f-cols">
-      <div class="f-brand-col">
-        <div class="f-brand"><svg class="mark" data-mark></svg><span>Arcadia</span></div>
-        <p class="f-blurb">A members' tennis club and academy where focused coaching meets championship courts.</p>
-        <address class="f-address">
-          <a href="mailto:contact@arcadia-tennis.fr">contact@arcadia-tennis.fr</a>
-          <a href="tel:+33199004218">+33 1 99 00 42 18</a>
-          <span class="muted">18 allée des Courts, 75016 Paris</span>
-        </address>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section class="section contact" id="contact" aria-labelledby="contact-title">
+    <div class="wrap contact-grid">
+      <div class="contact-card">
+        <p class="eyebrow light reveal-up" data-i18n="ct.eyebrow">Venir au club</p>
+        <h2 class="h2 split" id="contact-title" data-i18n-html="ct.title">Passez <em>nous voir.</em></h2>
+        <div class="ct-blocks">
+          <div class="reveal-up">
+            <h3 data-i18n="ct.addr">Adresse</h3>
+            <p>18 allée des Courts<br />75016 Paris</p>
+            <p class="muted" data-i18n="ct.transit">Métro 9 · Porte de Saint-Cloud · 6 min à pied</p>
+          </div>
+          <div class="reveal-up">
+            <h3 data-i18n="ct.hours">Horaires</h3>
+            <table class="hours" id="hours">
+              <tr data-days="1-5"><th data-i18n="ct.wk">Lun – Ven</th><td>7h – 23h</td></tr>
+              <tr data-days="6-0"><th data-i18n="ct.we">Sam – Dim</th><td>8h – 21h</td></tr>
+            </table>
+            <p class="open-now" id="open-now"></p>
+          </div>
+          <div class="reveal-up">
+            <h3 data-i18n="ct.reach">Nous joindre</h3>
+            <p><a class="ul" href="tel:+33199004218">+33 1 99 00 42 18</a><br /><a class="ul" href="mailto:contact@arcadia-tennis.fr">contact@arcadia-tennis.fr</a></p>
+          </div>
+        </div>
+        <div class="map reveal-up">
+          <iframe title="Carte — Arcadia Tennis Club" loading="lazy" referrerpolicy="no-referrer" src="https://www.openstreetmap.org/export/embed.html?bbox=2.2440%2C48.8300%2C2.2720%2C48.8440&amp;layer=mapnik&amp;marker=48.8370%2C2.2580"></iframe>
+        </div>
       </div>
-      <nav class="f-nav" aria-label="Programs"><h3>Programs</h3><ul>
-        <li><a href="#junior">Junior Development</a></li><li><a href="#performance">Performance Squad</a></li><li><a href="#adult">Adult Clinics</a></li><li><a href="#private">Private Coaching</a></li>
-      </ul></nav>
-      <nav class="f-nav" aria-label="Club"><h3>Club</h3><ul>
-        <li><a href="#membership">Membership</a></li><li><a href="#facilities">Facilities</a></li><li><a href="#club">Events</a></li><li><a href="#shop">Pro Shop</a></li>
-      </ul></nav>
-      <nav class="f-nav" aria-label="Company"><h3>Company</h3><ul>
-        <li><a href="#about">About</a></li><li><a href="#programs">Coaches</a></li><li><a href="#careers">Careers</a></li><li><a href="#contact">Contact</a></li>
-      </ul></nav>
+
+      <form class="form reveal-up" id="contact-form" novalidate>
+        <h3 class="form-title" data-i18n="ct.formTitle">Écrivez-nous</h3>
+        <p class="form-sub" data-i18n="ct.formSub">Réponse sous 24 h ouvrées.</p>
+        <div class="f-row">
+          <label class="fld"><span data-i18n="f.first">Prénom</span><input name="first" autocomplete="given-name" required /><em class="err" data-i18n="f.req">Champ requis</em></label>
+          <label class="fld"><span data-i18n="f.last">Nom</span><input name="last" autocomplete="family-name" required /><em class="err" data-i18n="f.req">Champ requis</em></label>
+        </div>
+        <label class="fld"><span data-i18n="f.email">E-mail</span><input name="email" type="email" autocomplete="email" required /><em class="err" data-i18n="f.emailErr">E-mail invalide</em></label>
+        <label class="fld"><span data-i18n="f.subject">Sujet</span>
+          <select name="subject">
+            <option data-i18n="f.o1">Adhésion</option>
+            <option data-i18n="f.o2">École de tennis / juniors</option>
+            <option data-i18n="f.o3">Cours particuliers</option>
+            <option data-i18n="f.o4">Entreprise &amp; événements</option>
+            <option data-i18n="f.o5">Autre</option>
+          </select>
+        </label>
+        <label class="fld"><span data-i18n="f.msg">Message</span><textarea name="message" rows="4" required></textarea><em class="err" data-i18n="f.req">Champ requis</em></label>
+        <label class="check"><input type="checkbox" name="consent" required /><span data-i18n="f.consent">J'accepte que mes données soient utilisées pour traiter ma demande.</span></label>
+        <button class="btn btn-navy btn-block" type="submit"><span data-i18n="f.send">Envoyer le message</span><svg class="i"><use href="#i-arrow"/></svg></button>
+        <div class="form-ok" hidden>
+          <svg class="i"><use href="#i-check"/></svg>
+          <div><strong data-i18n="f.okT">Message envoyé</strong><span data-i18n="f.okD">Merci ! L'équipe vous répond très vite.</span></div>
+        </div>
+      </form>
     </div>
-    <div class="f-bottom">
-      <p>© 2026 Arcadia Tennis Club. All rights reserved.</p>
-      <nav aria-label="Social"><a href="#instagram">Instagram</a><a href="#x">X</a><a href="#youtube">YouTube</a><a href="#linkedin">LinkedIn</a></nav>
-      <nav aria-label="Legal"><a href="#privacy">Privacy</a><a href="#terms">Terms</a></nav>
+  </section>
+
+  <!-- ============ CTA BAND ============ -->
+  <section class="cta-band" aria-labelledby="cta-title">
+    <img src="assets/hero/hero-court.webp" alt="" loading="lazy" aria-hidden="true" class="parallax" data-speed="-10" />
+    <div class="wrap cta-in">
+      <h2 class="cta-title split" id="cta-title" data-i18n-html="cta.title">Votre premier cours <em>est offert.</em></h2>
+      <div class="cta-actions reveal-up">
+        <button class="btn btn-ball" type="button" data-open="trial"><span data-i18n="cta.trial">Cours d'essai offert</span><svg class="i"><use href="#i-arrow"/></svg></button>
+        <a class="btn btn-glass" href="#tarifs"><span data-i18n="cta.plans">Voir les formules</span></a>
+      </div>
     </div>
-  </footer>
+  </section>
 </main>
 
-<!-- ========== MENU OVERLAY ========== -->
-<div class="menu" id="menu" aria-hidden="true" inert>
-  <div class="menu-backdrop" id="menu-backdrop"></div>
-  <div class="menu-panel" id="menu-panel">
-    <div class="menu-inner">
-      <div class="menu-top">
-        <a class="brand" href="#" aria-label="Arcadia home"><svg class="mark" data-mark></svg><span>Arcadia</span></a>
-        <button class="round-btn close-light" type="button" id="menu-close" aria-label="Close menu"><svg data-x></svg></button>
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a class="logo" href="#top"><svg class="logo-mark" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M5.2 5.6a9 9 0 0 1 0 12.8M18.8 5.6a9 9 0 0 0 0 12.8"/></svg><span>Arcadia</span></a>
+        <p data-i18n="foot.blurb">Tennis club &amp; académie à Paris 16e. Coaching exigeant, courts de championnat, esprit de club.</p>
+        <form class="news" id="news-form" novalidate>
+          <label for="news-email" data-i18n="foot.news">Newsletter du club — 1 e-mail par mois</label>
+          <div class="news-row">
+            <input id="news-email" type="email" placeholder="vous@email.com" autocomplete="email" />
+            <button type="submit" aria-label="S'inscrire"><svg class="i"><use href="#i-arrow"/></svg></button>
+          </div>
+          <p class="news-msg" id="news-msg" aria-live="polite"></p>
+        </form>
       </div>
-      <nav class="menu-nav" aria-label="Menu">
-        <a class="menu-link" href="#programs">Programs</a>
-        <a class="menu-link" href="#facilities">Facilities</a>
-        <a class="menu-link" href="#testimonials">Reviews</a>
-        <a class="menu-link" href="#contact">Contact</a>
+      <nav class="foot-col" aria-label="Programmes"><h3 data-i18n="nav.programs">Programmes</h3><ul>
+        <li><a href="#programmes" data-prog="0" data-i18n="foot.p1">École de tennis</a></li>
+        <li><a href="#programmes" data-prog="1" data-i18n="foot.p2">Centre de compétition</a></li>
+        <li><a href="#programmes" data-prog="2" data-i18n="foot.p3">Adultes</a></li>
+        <li><a href="#programmes" data-prog="3" data-i18n="foot.p4">Cours particuliers</a></li>
+      </ul></nav>
+      <nav class="foot-col" aria-label="Club"><h3 data-i18n="nav.club">Le club</h3><ul>
+        <li><a href="#tarifs" data-i18n="nav.pricing">Tarifs</a></li>
+        <li><a href="#courts" data-i18n="nav.courts">Courts</a></li>
+        <li><a href="#agenda" data-i18n="nav.events">Agenda</a></li>
+        <li><a href="#coachs" data-i18n="nav.coaches">Coachs</a></li>
+      </ul></nav>
+      <nav class="foot-col" aria-label="Aide"><h3 data-i18n="foot.help">Aide</h3><ul>
+        <li><a href="#faq" data-i18n="foot.faq">FAQ</a></li>
+        <li><a href="#reserver" data-i18n="cta.book">Réserver un court</a></li>
+        <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+        <li><a href="#contact" data-i18n="foot.jobs">Recrutement</a></li>
+      </ul></nav>
+    </div>
+    <div class="foot-word" aria-hidden="true">Arcadia</div>
+    <div class="foot-bottom">
+      <p>© <span id="year">2026</span> Arcadia Tennis Club. <span data-i18n="foot.rights">Tous droits réservés.</span></p>
+      <nav aria-label="Réseaux sociaux" class="social">
+        <a href="#top" aria-label="Instagram"><svg class="i"><use href="#i-ig"/></svg></a>
+        <a href="#top" aria-label="YouTube"><svg class="i"><use href="#i-yt"/></svg></a>
+        <a href="#top" aria-label="LinkedIn"><svg class="i"><use href="#i-in"/></svg></a>
       </nav>
-      <div class="menu-bottom">
-        <button class="pill pill-light" type="button" id="menu-book" data-arrow-hover>Book a Visit <svg data-arrow></svg></button>
-        <nav class="menu-social" aria-label="Social"><a href="#instagram">Instagram</a><a href="#x">X</a><a href="#youtube">YouTube</a><a href="#linkedin">LinkedIn</a></nav>
-      </div>
+      <nav aria-label="Légal" class="legal"><a href="#top" data-i18n="foot.legal">Mentions légales</a><a href="#top" data-i18n="foot.privacy">Confidentialité</a><a href="#top" data-i18n="foot.cookies">Cookies</a></nav>
     </div>
   </div>
-</div>
+</footer>
 
-<!-- ========== CONTACT MODAL ========== -->
+<a class="to-top" href="#top" id="to-top" aria-label="Haut de page"><svg class="i up"><use href="#i-arrow"/></svg></a>
+
+<!-- ============ MODAL ============ -->
 <div class="modal" id="modal" aria-hidden="true" inert>
-  <div class="modal-backdrop" id="modal-backdrop"></div>
-  <div class="modal-panel" id="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modal-title" data-lenis-prevent>
-    <div class="modal-head">
-      <div>
-        <span class="eyebrow">Book a visit</span>
-        <h2 class="modal-title stack" id="modal-title" data-lines="Come see|the courts"></h2>
-      </div>
-      <button class="close-dark" type="button" id="modal-close" aria-label="Close"><svg data-x></svg></button>
-    </div>
-    <form class="v-form" id="visit-form" novalidate>
-      <label class="field"><span>Full name</span><input type="text" name="name" id="f-name" placeholder="Alex Rivera" autocomplete="name" /></label>
-      <label class="field"><span>Email</span><input type="email" name="email" placeholder="you@email.com" autocomplete="email" /></label>
-      <label class="field"><span>What would you like to play?</span><textarea name="message" rows="3" placeholder="I'd love to try a private lesson on the clay courts…"></textarea></label>
-      <button class="submit" type="submit" id="f-submit">Request a visit</button>
-    </form>
-    <div class="success" id="success" hidden>
-      <div class="success-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></div>
-      <h3>Request received</h3>
-      <p id="success-text"></p>
-      <button class="submit" type="button" id="success-done">Done</button>
-    </div>
+  <div class="modal-bg" data-close></div>
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button class="modal-x" type="button" data-close aria-label="Fermer"><svg class="i"><use href="#i-x"/></svg></button>
+    <div id="modal-body"></div>
   </div>
 </div>
 
-<script type="module">
-/* ================= Constants & data ================= */
-const A = "assets/";
-const EASE = {
-  outExpo: "cubic-bezier(0.16, 1, 0.3, 1)",
-  outQuart: "cubic-bezier(0.25, 1, 0.5, 1)",
-  inOutCubic: "cubic-bezier(0.65, 0, 0.35, 1)",
-};
-const ICON = {
-  mark: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M4.8 5.6A9 9 0 0 0 4.8 18.4"/><path d="M19.2 5.6a9 9 0 0 1 0 12.8"/></svg>',
-  arrow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
-  x: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
-};
-const COLLECTIONS = [
-  { img: "2.webp", brand: "Arcadia Pro", title: "Featured Gear", cta: "Shop the kit", alt: "Player driving a backhand on a hard court" },
-  { img: "3.webp", brand: "Court Series", title: "Summer Drop", cta: "View the line", alt: "Player stretching for a forehand on clay" },
-  { img: "5.webp", brand: "Academy Kit", title: "Junior Range", cta: "Browse juniors", alt: "Player set in a ready stance on clay" },
-];
-const TRUST = [
-  { headline: ["Expert", "Result-", "Driven", "Coaching"], img: "5.webp", name: "Marco Vidal", role: "Head Coach", alt: "Head coach set in a ready stance on clay" },
-  { headline: ["Sharper", "Faster", "Stronger", "Player"], img: "4.webp", name: "Elena Sokolova", role: "Performance Coach", alt: "Performance coach following through on a serve" },
-  { headline: ["Future", "Champions", "Start", "Here"], img: "1.webp", name: "James Okoro", role: "Juniors Lead", alt: "Juniors lead waiting to return on clay" },
-];
-const PROGRAMS = [
-  { i: "01", name: "Junior Development", desc: "Fundamentals, footwork, and match play for ages 6–14.", href: "#junior" },
-  { i: "02", name: "Performance Squad", desc: "High-volume training for competitive and ranked players.", href: "#performance" },
-  { i: "03", name: "Adult Clinics", desc: "Small-group sessions to sharpen technique and fitness.", href: "#adult" },
-  { i: "04", name: "Private Coaching", desc: "One-to-one sessions tailored to your goals and schedule.", href: "#private" },
-];
-const COURTS = [
-  { img: "1.webp", tone: "clay", name: "Redline Clay", desc: "A fast outdoor clay court tuned for long, physical rallies.", alt: "Player on the baseline of an outdoor clay court" },
-  { img: "4.webp", tone: "blue", name: "Harbor Court", desc: "A sheltered hard court built for precision and night play.", alt: "Player following through on a blue hard court" },
-];
-const STATS = [
-  { v: "24", l: "Certified coaches" }, { v: "12", l: "Championship courts" },
-  { v: "9K+", l: "Members training" }, { v: "15", l: "Years on the baseline" },
-];
-const TESTIMONIALS = [
-  { q: "I added a level to my serve in one season. The coaching is detailed and it actually sticks.", n: "Priya Anand", r: "Performance Squad" },
-  { q: "Best courts in the city and a team that treats every member like a competitor.", n: "Lukas Brenner", r: "Adult Clinics" },
-  { q: "My daughter went from shy beginner to club champion. Worth every minute.", n: "Dana Okafor", r: "Parent, Junior Development" },
-];
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-const $ = (s, r = document) => r.querySelector(s);
-const $$ = (s, r = document) => [...r.querySelectorAll(s)];
-const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+<!-- ============ ICON SPRITE ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2 6.4 20.2l1.1-6.3L2.9 9.5l6.3-.9z" fill="currentColor"/></symbol>
+  <symbol id="i-house" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7M5 9.5V20h14V9.5M10 20v-6h4v6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3s6 6.4 6 11a6 6 0 0 1-12 0c0-4.6 6-11 6-11z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  <symbol id="i-racket" viewBox="0 0 24 24"><ellipse cx="14" cy="9" rx="6" ry="6.5" transform="rotate(45 14 9)" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9.5 13.5L3.5 19.5M10 9.5l4.5 4.5M12 7l5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2.5L4.5 13.5H12l-1 8 8.5-11H12z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  <symbol id="i-car" viewBox="0 0 24 24"><path d="M4 16v3M20 16v3M3 16h18v-4l-2-5H5l-2 5zM3 12h18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7.5" cy="14" r=".8" fill="currentColor"/><circle cx="16.5" cy="14" r=".8" fill="currentColor"/></symbol>
+  <symbol id="i-video" viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M16 10.5l5-3v9l-5-3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 10h17M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 7.5V12l3 2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 5.2a3.5 3.5 0 0 1 0 6.6M18 14.3A6.5 6.5 0 0 1 21.5 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="i-ig" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor"/></symbol>
+  <symbol id="i-yt" viewBox="0 0 24 24"><rect x="2.5" y="5.5" width="19" height="13" rx="4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 9.3v5.4l4.6-2.7z" fill="currentColor"/></symbol>
+  <symbol id="i-in" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="3" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 10.5V16M8 7.6v.1M11.5 16v-3.2a2.3 2.3 0 0 1 4.6 0V16M11.5 10.5V16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+</svg>
 
-// Inject icons
-$$("svg[data-mark]").forEach(s => s.outerHTML = ICON.mark.replace("<svg", `<svg class="${s.getAttribute("class") || "mark"}"`));
-$$("svg[data-arrow]").forEach(s => s.outerHTML = ICON.arrow);
-$$("svg[data-x]").forEach(s => s.outerHTML = ICON.x);
-
-/* ================= Spring engine (react-spring tension/friction model) ================= */
-const activeSprings = new Set();
-class Spring {
-  constructor(initial, apply, config = { tension: 170, friction: 26 }) {
-    this.v = { ...initial }; this.t = { ...initial }; this.vel = {};
-    for (const k in initial) this.vel[k] = 0;
-    this.apply = apply; this.config = config;
-    apply(this.v);
-  }
-  to(target, config) {
-    if (config) this.config = config;
-    for (const k in target) { this.t[k] = target[k]; if (!(k in this.v)) { this.v[k] = target[k]; this.vel[k] = 0; } }
-    activeSprings.add(this);
-    return this;
-  }
-  set(vals) {
-    for (const k in vals) { this.v[k] = this.t[k] = vals[k]; this.vel[k] = 0; }
-    this.apply(this.v);
-  }
-  step(dt) {
-    const { tension, friction } = this.config;
-    const n = Math.max(1, Math.ceil(dt / 0.004)), h = dt / n;
-    let moving = false;
-    for (const k in this.t) {
-      let x = this.v[k], vv = this.vel[k];
-      const tg = this.t[k];
-      for (let i = 0; i < n; i++) { const a = -tension * (x - tg) - friction * vv; vv += a * h; x += vv * h; }
-      if (Math.abs(x - tg) < 0.001 && Math.abs(vv) < 0.001) { x = tg; vv = 0; } else moving = true;
-      this.v[k] = x; this.vel[k] = vv;
-    }
-    this.apply(this.v);
-    if (!moving) activeSprings.delete(this);
-  }
-}
-const tf = el => v => {
-  el.style.transform = `translate3d(${v.x || 0}px, ${v.y || 0}px, 0) scale(${v.scale ?? 1}) rotate(${v.rotate || 0}deg)`;
-  if ("opacity" in v) el.style.opacity = v.opacity;
-};
-
-/* ================= Scroll-progress parallax ================= */
-const parallax = [];
-function addParallax(el, section, axis, from, to) { parallax.push({ el, section, axis, from, to }); }
-function updateParallax() {
-  const vh = innerHeight;
-  for (const p of parallax) {
-    const r = p.section.getBoundingClientRect();
-    const t = Math.min(1, Math.max(0, (vh - r.top) / (vh + r.height)));
-    const v = p.from + (p.to - p.from) * t;
-    p.el.style.transform = p.axis === "y" ? `translate3d(0, ${v}%, 0)` : `translate3d(${v}%, 0, 0)`;
-  }
-}
-
-/* ================= Lenis + scroll lock + rAF loop ================= */
-let lenis = null;
-const locks = new Set();
-function applyLock() {
-  const on = locks.size > 0, h = document.documentElement.style;
-  if (on) { lenis?.stop(); h.position = "relative"; h.overflow = "hidden"; h.height = "100%"; }
-  else { h.removeProperty("position"); h.removeProperty("overflow"); h.removeProperty("height"); lenis?.start(); }
-}
-const lock = r => { locks.add(r); applyLock(); };
-const unlock = r => { locks.delete(r); applyLock(); };
-
-let last = performance.now();
-function raf(t) {
-  lenis?.raf(t);
-  const dt = Math.min((t - last) / 1000, 0.064); last = t;
-  for (const s of [...activeSprings]) s.step(dt);
-  updateParallax();
-  requestAnimationFrame(raf);
-}
-requestAnimationFrame(raf);
-
-window.scrollTo(0, 0);
-import("lenis").then(({ default: Lenis }) => {
-  lenis = new Lenis({ smoothWheel: true });
-  applyLock();
-}).catch(err => console.warn("Lenis failed to load, using native scroll", err));
-
-function scrollToTarget(el) {
-  if (lenis) lenis.scrollTo(el);
-  else el.scrollIntoView({ behavior: "smooth" });
-}
-document.addEventListener("click", e => {
-  const a = e.target.closest('a[href^="#"]');
-  if (!a || a.closest("#menu")) return;
-  const id = a.getAttribute("href");
-  if (id === "#") { e.preventDefault(); scrollToTarget(document.body); return; }
-  const el = document.querySelector(id);
-  if (el) { e.preventDefault(); scrollToTarget(el); }
-});
-
-/* ================= Loader ready gate ================= */
-let resolveReady;
-const ready = new Promise(r => resolveReady = r);
-
-/* ================= Reveal primitives ================= */
-function onceInView(el, cb, threshold = 0.15) {
-  const io = new IntersectionObserver(entries => {
-    for (const e of entries) if (e.isIntersecting) { io.disconnect(); cb(); break; }
-  }, { threshold, rootMargin: "0px 0px -5% 0px" });
-  io.observe(el);
-}
-// Inview: spring from -> to once on first viewport entry (optionally gated)
-function inview(el, from, to, { delay = 0, config, gate } = {}) {
-  const s = new Spring(from, tf(el), config);
-  onceInView(el, async () => { if (gate) await gate; setTimeout(() => s.to(to), delay); }, 0.1);
-  return s;
-}
-// Hover spring. Mouse: enter/leave. Touch: same spring, triggered either on press
-// (buttons) or while the element crosses the middle of the screen (cards/rows).
-const noHover = matchMedia("(hover: none)").matches;
-function hover(trigger, target, from, to, config, { touch = "press" } = {}) {
-  const s = new Spring(from, tf(target), config);
-  trigger.addEventListener("pointerenter", e => { if (e.pointerType === "mouse") s.to(to); });
-  trigger.addEventListener("pointerleave", e => { if (e.pointerType === "mouse") s.to(from); });
-  if (touch === "press") {
-    let t;
-    trigger.addEventListener("pointerdown", e => { if (e.pointerType !== "mouse") { clearTimeout(t); s.to(to); } });
-    const release = e => { if (e.pointerType !== "mouse") { clearTimeout(t); t = setTimeout(() => s.to(from), 220); } };
-    ["pointerup", "pointercancel"].forEach(ev => trigger.addEventListener(ev, release));
-  } else if (touch === "view" && noHover) {
-    new IntersectionObserver(([e]) => s.to(e.isIntersecting ? to : from),
-      { rootMargin: "-38% 0px -38% 0px" }).observe(trigger);
-  }
-  return s;
-}
-function clipIn(inner, { duration, delay = 0, easing = EASE.outExpo }) {
-  inner.getAnimations().forEach(a => a.cancel());
-  return inner.animate(
-    [{ transform: "translateY(115%)", opacity: 0 }, { transform: "translateY(0)", opacity: 1 }],
-    { duration, delay, easing, fill: "both" }
-  );
-}
-// StackedLines
-function stacked(el, { stagger = 120, baseDelay = 0, duration = 950, gate, auto = true } = {}) {
-  const lines = el.dataset.lines.split("|");
-  el.innerHTML = lines.map(l => `<span class="line"><span>${l}</span></span>`).join("");
-  const inners = $$(".line > span", el);
-  const play = () => inners.forEach((s, i) => clipIn(s, { duration, delay: baseDelay + i * stagger }));
-  const reset = () => inners.forEach(s => { s.getAnimations().forEach(a => a.cancel()); });
-  if (auto) onceInView(el, async () => { if (gate) await gate; play(); });
-  return { play, reset };
-}
-// Word clip-mask reveal
-function splitWords(el) {
-  const words = el.textContent.trim().split(/\s+/);
-  el.innerHTML = words.map(w => `<span class="w"><span>${w}</span></span>`).join(" ");
-  return $$(".w > span", el);
-}
-
-/* ================= Shared component builders ================= */
-function renderDots(container, count, active, onPick) {
-  container.innerHTML = "";
-  for (let i = 0; i < count; i++) {
-    const b = document.createElement("button");
-    b.type = "button"; b.className = "dot";
-    b.setAttribute("aria-label", `Go to slide ${i + 1}`);
-    b.innerHTML = "<i></i>";
-    b.addEventListener("click", () => onPick(i));
-    container.appendChild(b);
-  }
-  const update = idx => [...container.children].forEach((b, i) => b.setAttribute("aria-current", i === idx ? "true" : "false"));
-  update(active);
-  return update;
-}
-$$("[data-arrow-hover]").forEach(btn => hover(btn, $("svg", btn), { x: 0 }, { x: 5 }, { tension: 320, friction: 20 }));
-$$(".arrow-btn").forEach(btn => hover(btn, $(".ico", btn), { scale: 1 }, { scale: 1.15 }, { tension: 320, friction: 18 }));
-$$(".close-dark, .close-light").forEach(btn => hover(btn, $("svg", btn), { rotate: 0 }, { rotate: 90 }, { tension: 300, friction: 18 }));
-
-/* ================= HERO ================= */
-addParallax($("#hero-plate"), $("#hero"), "y", 0, 12);
-const titleWords = splitWords($("#hero-title"));
-// Keep the spec'd 12.5vw, but shrink just enough if the Onest glyphs overflow the hero width
-function fitTitle() {
-  const h1 = $("#hero-title"), wrap = h1.parentElement;
-  h1.style.fontSize = "";
-  const cs = getComputedStyle(wrap);
-  const avail = wrap.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
-  const w = h1.scrollWidth;
-  if (w > avail) h1.style.fontSize = (parseFloat(getComputedStyle(h1).fontSize) * avail / w) + "px";
-}
-fitTitle();
-addEventListener("resize", fitTitle);
-document.fonts?.ready.then(fitTitle);
-ready.then(() => titleWords.forEach((w, i) => clipIn(w, { duration: 1100, delay: i * 140 })));
-stacked($("#hero-tagline"), { baseDelay: 350, stagger: 110, duration: 900, gate: ready });
-
-// Collection slider
-const csStage = $("#cs-stage");
-let csIdx = 0, csTimer = null;
-function csCard(c) {
-  const el = document.createElement("div");
-  el.className = "cs-card glass";
-  el.innerHTML = `<img src="${A + c.img}" alt="${c.alt}" loading="lazy" decoding="async" />
-    <div class="cs-text"><div><div class="cs-brand">${c.brand}</div><div class="cs-title">${c.title}</div></div>
-    <a class="cs-cta" href="#shop">${c.cta} →</a></div>`;
-  return el;
-}
-let csCurrent = csCard(COLLECTIONS[0]);
-csStage.appendChild(csCurrent);
-const csDots = renderDots($("#cs-dots"), COLLECTIONS.length, 0, i => { goCs(i); restartCs(); });
-function goCs(i) {
-  i = (i + COLLECTIONS.length) % COLLECTIONS.length;
-  if (i === csIdx) return;
-  csIdx = i; csDots(i);
-  const cfg = { tension: 210, friction: 24 };
-  const out = csCurrent;
-  new Spring({ opacity: 1, y: 0, scale: 1 }, tf(out), cfg).to({ opacity: 0, y: 16, scale: 0.96 });
-  out.style.pointerEvents = "none";
-  setTimeout(() => out.remove(), 900);
-  csCurrent = csCard(COLLECTIONS[i]);
-  csStage.appendChild(csCurrent);
-  new Spring({ opacity: 0, y: 16, scale: 0.96 }, tf(csCurrent), cfg).to({ opacity: 1, y: 0, scale: 1 });
-}
-function restartCs() { clearInterval(csTimer); csTimer = setInterval(() => goCs(csIdx + 1), 3800); }
-ready.then(restartCs);
-COLLECTIONS.forEach(c => { const im = new Image(); im.src = A + c.img; });
-
-const heroCfg = { tension: 200, friction: 26 };
-inview($("#collection"), { opacity: 0, y: 28 }, { opacity: 1, y: 0 }, { delay: 650, config: heroCfg, gate: ready });
-inview($("#member-card"), { opacity: 0, y: 28 }, { opacity: 1, y: 0 }, { delay: 780, config: heroCfg, gate: ready });
-
-/* ================= TRUST ================= */
-const trustSec = $("#trust");
-inview($("#pct-badge"), { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1 }, { config: { tension: 220, friction: 22 } });
-inview($("#badge-card"), { opacity: 0, y: 24 }, { opacity: 1, y: 0 }, { delay: 120, config: { tension: 200, friction: 26 } });
-const ghostWords = $$(".ghost-word", trustSec);
-const ghostInners = ghostWords.map(g => $(".inner", g));
-[[-3, 3], [3, -3], [-2, 4], [4, -3]].forEach(([f, t], i) => addParallax(ghostWords[i], trustSec, "x", f, t));
-inview($("#coach-in"), { opacity: 0, y: 60, scale: 0.92 }, { opacity: 1, y: 0, scale: 1 }, { config: { tension: 170, friction: 26 } });
-
-let tIdx = 0, ghostShown = false;
-const coachImgs = $("#coach-imgs");
-function setCoachPhoto(s, fade) {
-  const img = new Image();
-  img.src = A + s.img; img.alt = s.alt; img.decoding = "async";
-  if (!fade) { coachImgs.appendChild(img); return; }
-  img.style.opacity = 0;
-  coachImgs.appendChild(img);
-  const olds = [...coachImgs.children].filter(n => n !== img);
-  const go = () => {
-    new Spring({ opacity: 0 }, v => img.style.opacity = v.opacity, { tension: 260, friction: 26 }).to({ opacity: 1 });
-    setTimeout(() => olds.forEach(o => o.remove()), 900);
-  };
-  img.decode ? img.decode().then(go, go) : go();
-}
-const trustDots = renderDots($("#trust-dots"), TRUST.length, 0, i => setTrust(i));
-function setTrust(i, first = false) {
-  i = (i + TRUST.length) % TRUST.length;
-  if (!first && i === tIdx) return;
-  tIdx = i;
-  const s = TRUST[i];
-  ghostInners.forEach((el, k) => { el.textContent = s.headline[k]; if (!first && ghostShown) clipIn(el, { duration: 700 }); });
-  $("#coach-name").textContent = s.name;
-  $("#coach-role").textContent = s.role;
-  setCoachPhoto(s, !first);
-  trustDots(i);
-}
-setTrust(0, true);
-onceInView($("#trust-title"), () => { ghostShown = true; ghostInners.forEach(el => clipIn(el, { duration: 700 })); });
-$("#trust-prev").addEventListener("click", () => setTrust(tIdx - 1));
-$("#trust-next").addEventListener("click", () => setTrust(tIdx + 1));
-TRUST.forEach(t => { const im = new Image(); im.src = A + t.img; });
-
-/* ================= PROGRAMS ================= */
-stacked($("#programs-title"));
-const progList = $("#prog-list");
-PROGRAMS.forEach((p, i) => {
-  const li = document.createElement("li");
-  li.innerHTML = `<a href="${p.href}"><div class="prog-row">
-    <span class="prog-idx">${p.i}</span>
-    <div class="prog-body"><div class="prog-name">${p.name}</div><p class="prog-desc">${p.desc}</p></div>
-    <span class="prog-arrow">${ICON.arrow}</span></div></a>`;
-  progList.appendChild(li);
-  inview($(".prog-row", li), { opacity: 0, y: 26 }, { opacity: 1, y: 0 }, { delay: i * 90, config: { tension: 190, friction: 26 } });
-  hover($("a", li), $(".prog-arrow", li), { x: 0, opacity: 0.55 }, { x: 8, opacity: 1 }, { tension: 300, friction: 20 }, { touch: "view" });
-});
-
-/* ================= FACILITIES ================= */
-inview($("#fac-icon"), { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1 }, { config: { tension: 240, friction: 20 } });
-stacked($("#facilities-title"), { stagger: 120 });
-{
-  const body = $("#fac-body");
-  const words = body.textContent.trim().split(/\s+/);
-  body.innerHTML = words.map(w => `<span class="fw">${w}</span>`).join(" ");
-  const spans = $$(".fw", body);
-  onceInView(body, () => spans.forEach((s, i) => s.animate(
-    [{ transform: "translateY(18px)", opacity: 0 }, { transform: "translateY(0)", opacity: 1 }],
-    { duration: 700, delay: 250 + i * 28, easing: EASE.outQuart, fill: "both" }
-  )));
-}
-const courts = $("#courts");
-COURTS.forEach((c, i) => {
-  const fig = document.createElement("figure");
-  fig.className = "court";
-  fig.innerHTML = `<div class="court-tile"><img src="${A + c.img}" alt="${c.alt}" loading="lazy" decoding="async" />
-    <figcaption class="court-cap ${c.tone}"><div class="court-name">${c.name}</div><div class="court-desc">${c.desc}</div></figcaption></div>`;
-  courts.appendChild(fig);
-  inview(fig, { opacity: 0, y: 48 }, { opacity: 1, y: 0 }, { delay: i * 140, config: { tension: 180, friction: 26 } });
-  hover($(".court-tile", fig), $("img", fig), { scale: 1 }, { scale: 1.03 }, { tension: 300, friction: 22 }, { touch: "view" });
-});
-
-/* ================= STATS ================= */
-stacked($("#stats-title"));
-const statsGrid = $("#stats-grid");
-STATS.forEach((s, i) => {
-  const d = document.createElement("div");
-  d.className = "stat";
-  d.innerHTML = `<dt class="sr-only">${s.l}</dt><dd><div class="stat-val">${s.v}</div><div class="stat-label">${s.l}</div></dd>`;
-  statsGrid.appendChild(d);
-  inview(d, { opacity: 0, y: 30 }, { opacity: 1, y: 0 }, { delay: i * 110, config: { tension: 180, friction: 24 } });
-});
-
-/* ================= TESTIMONIALS ================= */
-stacked($("#testimonials-title"));
-const tGrid = $("#t-grid");
-TESTIMONIALS.forEach((t, i) => {
-  const li = document.createElement("li");
-  li.innerHTML = `<figure class="t-card"><div><div class="t-quote" aria-hidden="true">“</div>
-    <blockquote>${t.q}</blockquote></div>
-    <figcaption><div class="t-name">${t.n}</div><div class="t-role">${t.r}</div></figcaption></figure>`;
-  tGrid.appendChild(li);
-  inview(li, { opacity: 0, y: 40 }, { opacity: 1, y: 0 }, { delay: i * 120, config: { tension: 180, friction: 26 } });
-  hover($(".t-card", li), $(".t-card", li), { y: 0 }, { y: -8 }, { tension: 300, friction: 22 }, { touch: "view" });
-});
-
-/* ================= FOOTER ================= */
-stacked($(".f-cta-title"));
-inview($("#footer-cta"), { opacity: 0, y: 20 }, { opacity: 1, y: 0 }, { delay: 150, config: { tension: 200, friction: 24 } });
-
-/* ================= MENU OVERLAY ================= */
-const menu = $("#menu"), burger = $("#burger");
-const menuBd = new Spring({ opacity: 0 }, v => $("#menu-backdrop").style.opacity = v.opacity, { tension: 260, friction: 30 });
-const menuPanel = new Spring({ opacity: 0, y: -24 }, tf($("#menu-panel")), { tension: 220, friction: 28 });
-const menuLinks = $$(".menu-link").map(a => new Spring({ opacity: 0, y: 28 }, tf(a), { tension: 200, friction: 26 }));
-let menuOpen = false, menuTimers = [];
-function openMenu() {
-  if (menuOpen) return;
-  menuOpen = true;
-  menu.classList.add("open"); menu.inert = false; menu.setAttribute("aria-hidden", "false");
-  burger.setAttribute("aria-expanded", "true");
-  lock("menu");
-  menuBd.to({ opacity: 1 }); menuPanel.to({ opacity: 1, y: 0 });
-  menuTimers = menuLinks.map((s, i) => setTimeout(() => s.to({ opacity: 1, y: 0 }), 120 + i * 70));
-  setTimeout(() => $("#menu-close").focus({ preventScroll: true }), 50);
-}
-function closeMenu(restoreFocus = true) {
-  if (!menuOpen) return;
-  menuOpen = false;
-  menuTimers.forEach(clearTimeout);
-  menu.classList.remove("open"); menu.inert = true; menu.setAttribute("aria-hidden", "true");
-  burger.setAttribute("aria-expanded", "false");
-  menuBd.to({ opacity: 0 }); menuPanel.to({ opacity: 0, y: -24 });
-  menuLinks.forEach(s => s.to({ opacity: 0, y: 28 }));
-  unlock("menu");
-  if (restoreFocus) burger.focus({ preventScroll: true });
-}
-burger.addEventListener("click", openMenu);
-$("#menu-close").addEventListener("click", () => closeMenu());
-$("#menu-backdrop").addEventListener("click", () => closeMenu());
-$$("#menu a[href^='#']").forEach(a => a.addEventListener("click", e => {
-  e.preventDefault();
-  const id = a.getAttribute("href");
-  closeMenu(false);
-  const el = id === "#" ? document.body : document.querySelector(id);
-  if (el) requestAnimationFrame(() => scrollToTarget(el));
-}));
-$("#menu-book").addEventListener("click", () => { closeMenu(false); openModal(); });
-
-/* ================= CONTACT MODAL ================= */
-const modal = $("#modal"), form = $("#visit-form"), submitBtn = $("#f-submit"), success = $("#success");
-const modalBd = new Spring({ opacity: 0 }, v => $("#modal-backdrop").style.opacity = v.opacity, { tension: 240, friction: 30 });
-const modalPanel = new Spring({ opacity: 0, y: 28, scale: 0.96 }, tf($("#modal-panel")), { tension: 240, friction: 26 });
-const modalTitle = stacked($("#modal-title"), { stagger: 90, duration: 800, auto: false });
-let modalOpen = false, lastFocus = null, resetTimer = null, sendTimer = null;
-function resetForm() {
-  clearTimeout(sendTimer);
-  form.reset(); form.hidden = false; success.hidden = true;
-  submitBtn.disabled = false; submitBtn.textContent = "Request a visit";
-}
-function openModal() {
-  if (modalOpen) return;
-  modalOpen = true;
-  clearTimeout(resetTimer);
-  lastFocus = document.activeElement;
-  modal.classList.add("open"); modal.inert = false; modal.setAttribute("aria-hidden", "false");
-  lock("modal");
-  modalBd.to({ opacity: 1 }); modalPanel.to({ opacity: 1, y: 0, scale: 1 });
-  modalTitle.reset(); modalTitle.play();
-  setTimeout(() => $("#f-name").focus({ preventScroll: true }), 120);
-}
-function closeModal() {
-  if (!modalOpen) return;
-  modalOpen = false;
-  modal.classList.remove("open"); modal.inert = true; modal.setAttribute("aria-hidden", "true");
-  modalBd.to({ opacity: 0 }); modalPanel.to({ opacity: 0, y: 28, scale: 0.96 });
-  unlock("modal");
-  resetTimer = setTimeout(resetForm, 350);
-  if (lastFocus && document.contains(lastFocus) && !lastFocus.closest("#menu")) lastFocus.focus({ preventScroll: true });
-}
-$$("[data-open-modal]").forEach(b => b.addEventListener("click", openModal));
-$("#modal-close").addEventListener("click", closeModal);
-$("#modal-backdrop").addEventListener("click", closeModal);
-$("#success-done").addEventListener("click", closeModal);
-// Submit is a local stub — no network request is ever made.
-form.addEventListener("submit", e => {
-  e.preventDefault();
-  if (submitBtn.disabled) return;
-  submitBtn.disabled = true; submitBtn.textContent = "Sending…";
-  const first = (form.elements.name.value.trim().split(/\s+/)[0]) || "there";
-  sendTimer = setTimeout(() => {
-    $("#success-text").textContent = `Thanks, ${first} — our team will be in touch to lock in your visit.`;
-    form.hidden = true; success.hidden = false;
-    $("#success-done").focus({ preventScroll: true });
-  }, 700);
-});
-document.addEventListener("keydown", e => {
-  if (e.key !== "Escape") return;
-  if (modalOpen) closeModal(); else if (menuOpen) closeMenu();
-});
-
-/* ================= LOADER ================= */
-{
-  const MIN_VISIBLE_MS = reduceMotion ? 200 : 1400, MAX_VISIBLE_MS = 2600, EXIT_MS = reduceMotion ? 0 : 850;
-  const loader = $("#loader");
-  lock("loader");
-  new Spring({ opacity: 0, y: 16 }, tf($("#loader-mark")), { tension: 200, friction: 22 }).to({ opacity: 1, y: 0 });
-  $("#loader-fill").animate([{ transform: "scaleX(0)" }, { transform: "scaleX(1)" }],
-    { delay: 120, duration: Math.max(80, MIN_VISIBLE_MS - 120), easing: EASE.inOutCubic, fill: "both" });
-  let started = false, done = false;
-  const finish = () => {
-    if (done) return;
-    done = true;
-    resolveReady();
-    unlock("loader");
-    window.scrollTo(0, 0);
-    if (EXIT_MS) loader.animate([{ transform: "translateY(0%)" }, { transform: "translateY(-105%)" }],
-      { duration: EXIT_MS, easing: EASE.inOutCubic, fill: "forwards" });
-    setTimeout(() => loader.remove(), EXIT_MS);
-  };
-  const begin = () => { if (started) return; started = true; setTimeout(finish, MIN_VISIBLE_MS); };
-  if (document.readyState === "complete") begin(); else addEventListener("load", begin, { once: true });
-  setTimeout(finish, MAX_VISIBLE_MS);
-}
-</script>
+<script src="js/i18n.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>

@@ -1,31 +1,35 @@
-# Arcadia — Tennis Club & Academy
+# Arcadia — Tennis Club & Académie
 
-Landing page for a fictional members' tennis club and academy. The whole site is a single `index.html` file: HTML, CSS and JS with no build step and no framework.
+Site vitrine complet d'un club de tennis parisien (fictif). HTML, CSS et JavaScript natifs, sans build ni framework.
 
-## What it includes
+## Sections
 
-- An intro loader with a progress bar and a curtain that slides up
-- Smooth scrolling with [Lenis](https://github.com/darkroomengineering/lenis), loaded from a CDN through an importmap
-- Spring animations in plain JS: text reveals behind a mask, fade-in on scroll, hover effects and parallax
-- Carousels for gear and coaches, a fullscreen menu and a contact modal (the form is a local demo and sends nothing)
-- An adaptive layout in `rem` that scales proportionally at every screen width, with a dedicated mobile layout
+- **Hero** : disponibilités du jour en direct, note moyenne, deux appels à l'action
+- **Le club** : présentation, chiffres clés animés
+- **Programmes** : onglets accessibles (école de tennis, compétition, adultes, cours particuliers)
+- **Coachs** : carrousel glissable (souris, tactile, clavier)
+- **Courts & services**
+- **Réservation en ligne** : date, surface, durée, créneaux avec heures creuses/pleines, récapitulatif, prix et confirmation avec référence
+- **Tarifs** : bascule mensuel / annuel (−15 %)
+- **Avis, agenda des événements (inscription), FAQ, contact** (horaires et statut « ouvert / fermé » en direct, carte, formulaire validé)
+- **Bilingue FR / EN**, choix mémorisé
 
-## Run locally
+Les formulaires sont des démos : ils valident les saisies mais n'envoient rien. Pour les brancher, remplacez `fakeSubmit()` dans `js/main.js` par un appel à votre backend (Formspree, Resend, API…).
 
-Open `index.html` in a browser, or serve the folder:
+## Qualité
+
+- SEO : meta, Open Graph, données structurées `SportsActivityLocation`
+- Accessibilité : lien d'évitement, navigation clavier (onglets, créneaux, modales avec piège du focus, Échap), `aria-*`, respect de `prefers-reduced-motion`
+- Responsive du mobile au grand écran, sans défilement horizontal
+
+## Lancer en local
 
 ```bash
-python -m http.server 8091
+python -m http.server 3040
 ```
 
-Then go to http://localhost:8091
+Puis ouvrez http://localhost:3040
 
-## Deploy
+## Déployer
 
-- **Vercel**: import the GitHub repo. It is a static site, so no build settings are needed.
-- **GitHub Pages**: Settings → Pages → deploy from the `main` branch, root folder.
-
-## Notes
-
-- All images are stored locally in `assets/`, so the site does not depend on any external image host.
-- Font: [Onest](https://fonts.google.com/specimen/Onest), loaded from Google Fonts.
+Site statique : importez le dossier sur Vercel (aucun réglage de build) ou GitHub Pages.
